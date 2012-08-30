@@ -1,0 +1,51 @@
+const M = 7, N = 85;
+var X, Y, Z, Q, R;
+procedure MULTIPLICAR;
+var A, B;
+begin
+A := X;
+B := Y;
+Z := 0;
+while B > 0 do
+begin
+if odd B then Z := Z + A;
+A := A * 2;
+B := B / 2
+end
+end;
+procedure DIVIDIR;
+var W;
+begin
+R := X;
+Q := 0;
+W := Y;
+while W <= R do W := W * 2;
+while W > Y do
+begin
+Q := Q * 2;
+W := W / 2;
+if W <= R then
+begin
+R := R - W;
+Q := Q + 1
+end
+end
+end;
+procedure MCD;
+var F, G;
+begin
+F := X;
+G := Y;
+while F <> G do
+begin
+if F < G then G := G - F;
+if G < F then F := F - G
+end;
+Z := F
+end;
+begin
+X := M; Y := N; call MULTIPLICAR;
+X := 25; Y := 3; call DIVIDIR;
+X := 84; Y := 36; call MCD
+end.
+
