@@ -31,17 +31,20 @@ terminos = {
     '*' : 'multiplicacion',
     '/' : 'division',
 }
+def entra_en_32_bits(elemento):
+    return True
 
 def parser (elemento):
 
-    if elemento.lower() in terminos:
-        return terminos[elemento.lower()]
-    if elemento.isdigit():
-        return 'numero'
-    if elemento.isalpha():
-        return 'identificador'
-    if elemento.isspace():
-        return 'espacio'
+    if entra_en_32_bits(elemento):
+        if elemento.lower() in terminos:
+            return terminos[elemento.lower()]
+        if elemento.isdigit():
+            return 'numero'
+        if elemento.isalpha():
+            return 'identificador'
+        if elemento.isspace():
+            return 'espacio'
     return '_nulo'
 
 def scanner (linea):
