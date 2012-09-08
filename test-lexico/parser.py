@@ -34,6 +34,15 @@ terminos = {
 def entra_en_32_bits(elemento):
     return True
 
+
+def leer (archivo):
+    f = open(archivo)
+    c = f.read(1)
+    if c :
+        return c
+    else:
+        return 'EOF'
+
 def parser (elemento):
 
     if entra_en_32_bits(elemento):
