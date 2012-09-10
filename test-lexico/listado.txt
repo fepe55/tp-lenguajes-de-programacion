@@ -1,0 +1,53 @@
+_const identificador igual numero coma identificador igual numero puntoycoma 
+_const identificador igual numero puntoycoma 
+_var identificador coma identificador coma identificador coma identificador coma identificador puntoycoma 
+_procedure identificador puntoycoma 
+_var identificador coma identificador puntoycoma 
+_begin 
+identificador _nulo igual identificador puntoycoma 
+identificador _nulo igual identificador puntoycoma 
+identificador _nulo igual numero puntoycoma 
+_while identificador mayor numero _do 
+_begin 
+_if _odd identificador _then identificador _nulo igual identificador suma identificador puntoycoma 
+identificador _nulo igual identificador multiplicacion numero puntoycoma 
+identificador _nulo igual identificador division numero 
+_end 
+_end puntoycoma 
+_procedure identificador puntoycoma 
+_var identificador puntoycoma 
+_begin 
+identificador _nulo igual identificador puntoycoma 
+identificador _nulo igual numero puntoycoma 
+identificador _nulo igual identificador puntoycoma 
+_while identificador menoroigual identificador _do identificador _nulo igual identificador multiplicacion numero puntoycoma 
+_while identificador mayor identificador _do 
+_begin 
+identificador _nulo igual identificador multiplicacion numero puntoycoma 
+identificador _nulo igual identificador division numero puntoycoma 
+_if identificador menoroigual identificador _then 
+_begin 
+identificador _nulo igual identificador resta identificador puntoycoma 
+identificador _nulo igual identificador suma numero 
+_end 
+_end 
+_end puntoycoma 
+_procedure identificador puntoycoma 
+_var identificador coma identificador puntoycoma 
+_begin 
+identificador _nulo igual identificador puntoycoma 
+identificador _nulo igual identificador puntoycoma 
+_while identificador distinto identificador _do 
+_begin 
+_if identificador menor identificador _then identificador _nulo igual identificador resta identificador puntoycoma 
+_if identificador menor identificador _then identificador _nulo igual identificador resta identificador 
+_end puntoycoma 
+identificador _nulo igual identificador 
+_end puntoycoma 
+_begin 
+identificador _nulo igual identificador puntoycoma identificador _nulo igual identificador puntoycoma _call identificador puntoycoma 
+identificador _nulo igual numero puntoycoma identificador _nulo igual numero puntoycoma _call identificador puntoycoma 
+identificador _nulo igual numero puntoycoma identificador _nulo igual numero puntoycoma _call identificador 
+_end punto 
+
+_FIN 

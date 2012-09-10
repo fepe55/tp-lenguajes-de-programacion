@@ -1,5 +1,4 @@
 # -*- encoding: utf-8 -*-
-import string
 
 terminos = {
     'const' : '_const',
@@ -31,52 +30,118 @@ terminos = {
     '*' : 'multiplicacion',
     '/' : 'division',
 }
+
+
 def entra_en_32_bits(elemento):
     return True
 
-def parser (elemento):
-
-    if entra_en_32_bits(elemento):
-        if elemento.lower() in terminos:
-            return terminos[elemento.lower()]
-        if elemento.isdigit():
-            return 'numero'
-        if elemento.isalpha():
-            return 'identificador'
-        if elemento.isspace():
-            return 'espacio'
-    return '_nulo'
-
-def scanner (linea):
-
+def palabra_reservada(palabra):
     palabras_reservadas = ['begin', 'end', 'call', 'const', 'var', 
-    'while', 'do', 'if', 'then', 'procedure', 'odd']
-    simbolos_dos_caracteres = ['<=','>=','<>',':=' ]
-    simbolos_un_caracter = ['>','<','=',',','.',';','(',')','+','-','*','/' ]
+        'while', 'do', 'if', 'then', 'procedure', 'odd',
+    ]
+ 
+    if palabra.lower() in palabras_reservadas:
+        return terminos[palabra.lower()]
+    else :
+        return 'identificador'
 
-    if linea[:2] in simbolos_dos_caracteres:
-        return (linea[:2],linea[2:])
-    if linea[0] in simbolos_un_caracter:
-        return (linea[0],linea[1:])
-    
-    index = 0
-    char = linea[index]
+def parser (linea):
 
-    if char.isalpha():
-        while char.isalnum():
-            index += 1
-            char = linea[index]
-        return (linea[:index],linea[index:])
+    simbolos_de_un_caracter_unicos = ['=',',','.',';','(',')','+','-','*','/']
 
-    if char.isdigit():
-        while char.isdigit():
-            index += 1
-            char = linea[index]
-        return (linea[:index],linea[index:])
+    caracter = linea[0] 
+    cad = ""
 
-    if char.isspace():
-        return (char,linea[1:])
+    while caracter is ' ':
+        linea = linea[1:]
+        caracter = linea[0]
 
-    print ('toastie!')
+    if caracter in simbolos_de_un_caracter_unicos:
+        cad = caracter
+        S = terminos[caracter]
+        restante = linea[1:]
+        return (S,cad,restante)
 
-    return ('','')
+    if caracter is '>':
+        try:
+            c = linea[1]
+        except IndexError:
+            cad = caracter
+            S = terminos[cad]
+            restante = linea[1:]
+        else:
+            if c is '=':
+                cad = linea[:2]
+                S = terminos[cad]
+                restante = linea[2:]
+            else:
+                cad = caracter
+                S = terminos[cad]
+                restante = linea[1:]
+
+        return (S,cad,restante)
+
+    if caracter is '<':
+        try:
+            c = linea[1]
+        except IndexError:
+            cad = caracter
+            S = terminos[cad]
+            restante = linea[1:]
+        else:
+            if c is '=':
+                cad = linea[:2]
+                S = terminos[cad]
+                restante = linea[2:]
+            else :
+                if c is '>':
+                    cad = linea[:2]
+                    S = terminos[cad]
+                    restante = linea[2:]
+                else :
+                    cad = caracter
+                    S = terminos[cad]
+                    restante = linea[1:]
+        return (S,cad,restante)
+
+    #Número
+    if caracter.isdigit():
+        restante = linea
+        while caracter.isdigit():
+            try:
+                #Agrego el número a la cadena
+                cad += caracter
+                #Y lo quito del restante
+                restante=restante[1:]
+                #Leo de nuevo
+                caracter = restante[0]
+            except IndexError:
+                break
+        if entra_en_32_bits(cad):
+            S = 'numero'
+        else:
+            S = '_nulo'
+        return (S,cad,restante)
+
+    #Identificador o palabra clave
+    if caracter.isalpha():
+        restante = linea
+        while caracter.isalnum():
+            try:
+                cad += caracter
+                restante=restante[1:]
+                caracter = restante[0]
+            except IndexError:
+                break
+        if entra_en_32_bits(cad):
+            S = palabra_reservada(cad)
+        else:
+            S = '_nulo'
+        return (S,cad,restante)
+
+    # Si no entró en ningún otro if, es nulo
+    cad = caracter
+    restante = linea[1:]
+    S = '_nulo'
+    return (S,cad,restante)
+
