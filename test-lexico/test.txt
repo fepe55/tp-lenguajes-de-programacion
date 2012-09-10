@@ -1,3 +1,4 @@
+writeln 'hola';
 const M = 7, N = 85;
 const M = 12312313616516191981561361613212313;
 var X, Y, Z, Q, R;

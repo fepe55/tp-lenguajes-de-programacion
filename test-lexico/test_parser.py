@@ -19,9 +19,7 @@ terminal = [
     'identificador','numero',
 ]
 
-
 def main():
-
     fuente = GestorDeArchivos("test.txt")
     listado = GestorDeArchivos("listado.txt")
     fuente.abrir_lectura()

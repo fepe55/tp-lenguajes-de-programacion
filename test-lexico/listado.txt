@@ -1,3 +1,4 @@
+identificador _literal 
 _const identificador igual numero coma identificador igual numero puntoycoma 
 _const identificador igual numero puntoycoma 
 _var identificador coma identificador coma identificador coma identificador coma identificador puntoycoma 
