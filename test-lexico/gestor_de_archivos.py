@@ -1,17 +1,17 @@
 # -*- encoding: utf-8 -*-
 
-class FileManager:
+class GestorDeArchivos:
 
     def __init__(self,filename):
         self.filename = filename
         
-    def open(self):
+    def abrir(self):
         self.f = open(self.filename)
 
-    def close (self):
+    def cerrar (self):
         self.f.close()
 
-    def read (self):
+    def leer (self):
         c = self.f.read(1)
         if c :
             if c == '\n':
