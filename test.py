@@ -32,7 +32,7 @@ def main():
     if not fuente.abrir_lectura():
         sys.exit("Error al tratar de abrir el archivo "+nombre_fuente)
 
-    listado = GestorDeArchivos("compilador/res/listado.txt")
+    listado = GestorDeArchivos("res/listado.txt")
 
     if not listado.abrir_escritura():
         fuente.cerrar()
