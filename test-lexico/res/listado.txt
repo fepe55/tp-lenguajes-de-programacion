@@ -51,4 +51,4 @@
 51: X := 25; Y := 3; call DIVIDIR;
 52: X := 84; Y := 36; call MCD
 53: end.
-54: EOF
+54: 

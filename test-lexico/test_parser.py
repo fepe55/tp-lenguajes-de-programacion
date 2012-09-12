@@ -20,8 +20,8 @@ terminal = [
 ]
 
 def main():
-    fuente = GestorDeArchivos("test.txt")
-    listado = GestorDeArchivos("listado.txt")
+    fuente = GestorDeArchivos("res/test.txt")
+    listado = GestorDeArchivos("res/listado.txt")
     fuente.abrir_lectura()
     listado.abrir_escritura()
 
