@@ -4,6 +4,7 @@
 
 from gestor_de_archivos import GestorDeArchivos
 import scanner
+import sys
 
 terminal = [
     '_nulo','_begin','_end',
@@ -21,10 +22,21 @@ terminal = [
 ]
 
 def main():
-    fuente = GestorDeArchivos("res/test.txt")
+    if len(sys.argv) < 2 :
+        sys.exit("Uso: "+sys.argv[0]+" <nombre_de_archivo>")
+    else:
+        nombre_fuente = sys.argv[1]
+    
+    fuente = GestorDeArchivos(nombre_fuente)
+
+    if not fuente.abrir_lectura():
+        sys.exit("Error al tratar de abrir el archivo "+nombre_fuente)
+
     listado = GestorDeArchivos("res/listado.txt")
-    fuente.abrir_lectura()
-    listado.abrir_escritura()
+
+    if not listado.abrir_escritura():
+        fuente.cerrar()
+        sys.exit("Error horrible, horrible")
 
     cad = ""
     S = ""

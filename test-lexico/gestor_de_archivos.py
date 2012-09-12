@@ -6,13 +6,18 @@ class GestorDeArchivos:
         self.filename = filename
         
     def abrir_lectura(self):
-        self.abrir ('rU')
+        return self.abrir ('rU')
 
     def abrir_escritura(self):
-        self.abrir ('w+')
+        return self.abrir ('w+')
 
     def abrir(self,modo):
-        self.f = open(self.filename,modo)
+        try:
+            self.f = open(self.filename,modo)
+            return True
+        except IOError:
+            return False
+            
 
     def cerrar (self):
         self.f.close()
