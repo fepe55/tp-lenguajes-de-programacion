@@ -1,0 +1,2 @@
+CONST A=2;
+procedure RAIZ;

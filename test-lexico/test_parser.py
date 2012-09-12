@@ -24,22 +24,17 @@ def main():
     listado = GestorDeArchivos("listado.txt")
     fuente.abrir_lectura()
     listado.abrir_escritura()
+
     cad = ""
     S = ""
+
     restante = fuente.leer_linea_sin_nl()
     numero_de_linea = 1
-    linea_actual = 1
+    listado.escribir(str(numero_de_linea)+': '+restante)
+
     while S is not "_FIN" :
         (listado,S,cad,restante,numero_de_linea) = \
             scanner.scanner(fuente, listado, terminal, S, cad, restante, numero_de_linea)
-
-        if S is "_FINLINEA":
-            restante = fuente.leer_linea_sin_nl()
-            listado.escribir("\n")
-        else:
-            print "S es",S
-            listado.escribir(S)
-            listado.escribir(" ")
 
     listado.cerrar()
     fuente.cerrar()

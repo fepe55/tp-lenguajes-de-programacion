@@ -1,5 +1,7 @@
 # -*- encoding: utf-8 -*-
 
+import errores
+
 terminos = {
     'const'     : '_const',
     'var'       : '_var',
@@ -16,6 +18,7 @@ terminos = {
     'write'     : '_write',
     'writeln'   : '_writeln',
     'readln'    : '_readln',
+    'eof'       : '_FIN',
     '<='        : 'menoroigual',
     '>='        : 'mayoroigual',
     '<>'        : 'distinto',
@@ -39,7 +42,7 @@ def entra_en_32_bits(elemento):
 
 def palabra_reservada(palabra):
     palabras_reservadas = ['begin', 'end', 'call', 'const', 'var', 
-        'while', 'do', 'if', 'then', 'procedure', 'odd',
+        'while', 'do', 'if', 'then', 'procedure', 'odd', 'eof',
     ]
  
     if palabra.lower() in palabras_reservadas:
@@ -47,7 +50,7 @@ def palabra_reservada(palabra):
     else :
         return 'identificador'
 
-def parser (linea):
+def obtener_simbolo (linea,numero_de_linea):
 
     simbolos_de_un_caracter_unicos = ['=',',','.',';','(',')','+','-','*','/']
 
@@ -62,6 +65,27 @@ def parser (linea):
         cad = caracter
         S = terminos[caracter]
         restante = linea[1:]
+        return (S,cad,restante)
+
+    if caracter is ':':
+        try:
+            c = linea[1]
+        except IndexError:
+            cad = caracter
+            S = '_nulo'
+            restante = linea[1:]
+            errores.error_lexico(errores.SE_ESPERABA_IGUAL,numero_de_linea)
+        else:
+            if c == '=':
+                cad = linea[:2]
+                S = terminos[cad]
+                restante = linea[2:]
+            else:
+                cad = caracter 
+                S = '_nulo'
+                restante = linea[1:]
+                errores.error_lexico(errores.SE_ESPERABA_IGUAL,numero_de_linea)
+
         return (S,cad,restante)
 
     if caracter is '>':
