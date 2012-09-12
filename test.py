@@ -2,8 +2,8 @@
 
 # -*- encoding: utf-8 -*-
 
-from gestor_de_archivos import GestorDeArchivos
-import scanner
+from compilador.utils.gestor_de_archivos import GestorDeArchivos
+from compilador.lexico import scanner
 import sys
 
 terminal = [
@@ -32,7 +32,7 @@ def main():
     if not fuente.abrir_lectura():
         sys.exit("Error al tratar de abrir el archivo "+nombre_fuente)
 
-    listado = GestorDeArchivos("res/listado.txt")
+    listado = GestorDeArchivos("compilador/res/listado.txt")
 
     if not listado.abrir_escritura():
         fuente.cerrar()

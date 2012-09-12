@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
 
-import errores
+from compilador.utils import errores
 
 terminos = {
     'const'     : '_const',

@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
 
-import lexico
+from compilador.lexico import lexico
 
 def scanner (fuente, listado, terminal, S, cad, restante, numero_de_linea):
     if restante is "EOF":
