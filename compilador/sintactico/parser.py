@@ -1,7 +1,8 @@
 # -*- encoding: utf-8 -*-
 
-from compilador.lexico.scanner import scanner
+from compilador.lexico.scanner import Scanner
 from compilador.sintactico import auxiliares
+from compilador.utils import errores
 
 terminal = [
     '_nulo','_begin','_end',
@@ -27,12 +28,13 @@ def parser (fuente,listado):
     numero_de_linea = 1
     listado.escribir(str(numero_de_linea)+': '+restante)
 
-    while S is not "punto" :
-        (listado,S,cad,restante,numero_de_linea) = \
-            scanner(fuente, listado, terminal, S, cad, restante, numero_de_linea)
+    scanner = Scanner(fuente,listado,terminal,S,cad,restante,numero_de_linea)
 
-#        if S is "_const":
-#            helpers.const(
+    auxiliares.bloque (scanner)
 
-
+    # (listado,S,cad,restante,numero_de_linea) = \
+    #     scanner(fuente, listado, terminal, S, cad, restante, numero_de_linea)
+    # 
+    # if S is not "punto":
+    #     errores.error_sintactico(errores.SE_ESPERA_PUNTO,numero_de_linea)
 

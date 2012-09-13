@@ -8,15 +8,16 @@ LITERAL_DEMASIADO_LARGO = "Literal demasiado largo"
 IDENTIFICADOR_DEMASIADO_LARGO = "Identificado demasiado largo"
 
 # Errores sintácticos
+SE_ESPERABA_PUNTO = "Se esperaba un punto"
 
 # Errores semánticos
 
 def error_lexico(mensaje,numero_de_linea):
-    print "Error léxico:",mensaje,"en",numero_de_linea
+    print "Error léxico:",mensaje,"en la línea",numero_de_linea
 
 def error_sintactico(mensaje,numero_de_linea):
-    print "Error sintáctico:",mensaje,"en",numero_de_linea
+    print "Error sintáctico:",mensaje,"en la línea",numero_de_linea
 
 def error_semantico(mensaje,numero_de_linea):
-    print "Error semántico:",mensaje,"en",numero_de_linea
+    print "Error semántico:",mensaje,"en la línea",numero_de_linea
 

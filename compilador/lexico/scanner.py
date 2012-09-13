@@ -2,20 +2,32 @@
 
 from compilador.lexico import auxiliares
 
-def scanner (fuente, listado, terminal, S, cad, restante, numero_de_linea):
-    if restante is "EOF":
-        S = "_FIN"
-        return (listado,S,cad,restante,numero_de_linea)
-    else:
-        if not restante:
-            numero_de_linea+=1
-            restante = fuente.leer_linea_sin_nl()
-            if restante:
-                listado.escribir("\n")
-                listado.escribir(str(numero_de_linea)+': '+restante)
-                (S,cad,restante) = auxiliares.obtener_simbolo(restante,numero_de_linea)
-        else:
-            (S,cad,restante) = auxiliares.obtener_simbolo(restante,numero_de_linea)
+class Scanner:
+    def __init__ (self,fuente,listado,terminal,S,cad,restante,numero_de_linea):
+        self.fuente = fuente
+        self.listado = listado
+        self.terminal = terminal
+        self.S = S
+        self.cad = cad
+        self.restante = restante
+        self.numero_de_linea = numero_de_linea
 
-        return (listado,S,cad,restante,numero_de_linea)
+    def leer (self):
+        if self.restante is "EOF":
+            self.S = "_FIN"
+            return self.S
+        else:
+            if not self.restante:
+                self.numero_de_linea+=1
+                self.restante = self.fuente.leer_linea_sin_nl()
+                if self.restante:
+                    self.listado.escribir("\n")
+                    self.listado.escribir(str(self.numero_de_linea)+': '+self.restante)
+                    (self.S,self.cad,self.restante) = \
+                        auxiliares.obtener_simbolo(self.restante, self.numero_de_linea)
+            else:
+                (self.S,self.cad,self.restante) = \
+                  auxiliares.obtener_simbolo(self.restante,self.numero_de_linea)
+
+            return self.S
 
