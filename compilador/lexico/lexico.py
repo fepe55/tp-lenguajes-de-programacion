@@ -1,5 +1,7 @@
 # -*- encoding: utf-8 -*-
 
+MAXIMO_TAMANIO_IDENTIFICADOR = 25
+
 from compilador.utils import errores
 
 terminos = {
@@ -37,8 +39,11 @@ terminos = {
     '/'         : 'division',
 }
 
-def entra_en_32_bits(elemento):
-    return True
+def longitud_correcta(cadena):
+    return len(cadena) < MAXIMO_TAMANIO_IDENTIFICADOR
+
+def numero_longitud_correcta(numero):
+    return longitud_correcta(str(numero))
 
 def palabra_reservada(palabra):
     palabras_reservadas = ['begin', 'end', 'call', 'const', 'var', 
@@ -142,11 +147,13 @@ def obtener_simbolo (linea,numero_de_linea):
                 restante = restante[1:]
                 caracter = restante[0]
             except IndexError:
+                errores.error_lexico(errores.FIN_INESPERADO_LITERAL,numero_de_linea)
                 break
         cad = cad + '\''
-        if entra_en_32_bits(cad):
+        if longitud_correcta(cad):
             S = '_literal'
         else:
+            errores.error_lexico(errores.LITERAL_DEMASIADO_LARGO,numero_de_linea)
             S = '_nulo'
         return (S,cad,restante)
 
@@ -163,9 +170,10 @@ def obtener_simbolo (linea,numero_de_linea):
                 caracter = restante[0]
             except IndexError:
                 break
-        if entra_en_32_bits(cad):
+        if numero_longitud_correcta(cad):
             S = 'numero'
         else:
+            errores.error_lexico(errores.ENTERO_DEMASIADO_LARGO,numero_de_linea)
             S = '_nulo'
         return (S,cad,restante)
 
@@ -179,9 +187,10 @@ def obtener_simbolo (linea,numero_de_linea):
                 caracter = restante[0]
             except IndexError:
                 break
-        if entra_en_32_bits(cad):
+        if longitud_correcta(cad):
             S = palabra_reservada(cad)
         else:
+            errores.error_lexico(errores.IDENTIFICADOR_DEMASIADO_LARGO,numero_de_linea)
             S = '_nulo'
         return (S,cad,restante)
 
