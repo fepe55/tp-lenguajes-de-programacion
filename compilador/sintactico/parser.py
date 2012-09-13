@@ -17,24 +17,19 @@ terminal = [
     'parentesiscierre','resta',
     'multiplicacion','division',
     'identificador','numero',
+    '_writeln','_write','_readln',
 ]
 
 def parser (fuente,listado):
 
-    cad = ""
-    S = ""
-
     restante = fuente.leer_linea_sin_nl()
-    numero_de_linea = 1
-    listado.escribir(str(numero_de_linea)+': '+restante)
 
-    scanner = Scanner(fuente,listado,terminal,S,cad,restante,numero_de_linea)
+    scanner = Scanner(fuente,listado,terminal)
 
     auxiliares.bloque (scanner)
 
-    # (listado,S,cad,restante,numero_de_linea) = \
-    #     scanner(fuente, listado, terminal, S, cad, restante, numero_de_linea)
-    # 
-    # if S is not "punto":
-    #     errores.error_sintactico(errores.SE_ESPERA_PUNTO,numero_de_linea)
+    (S,cadena,numero_de_linea) = scanner.leer()
+
+    if S is not "punto":
+        errores.error_sintactico(errores.SE_ESPERABA_PUNTO,numero_de_linea)
 

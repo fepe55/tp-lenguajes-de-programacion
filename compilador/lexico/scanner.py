@@ -3,19 +3,23 @@
 from compilador.lexico import auxiliares
 
 class Scanner:
-    def __init__ (self,fuente,listado,terminal,S,cad,restante,numero_de_linea):
+    def __init__ (self,fuente,listado,terminal):
         self.fuente = fuente
         self.listado = listado
         self.terminal = terminal
-        self.S = S
-        self.cad = cad
-        self.restante = restante
-        self.numero_de_linea = numero_de_linea
+        self.S = ''
+        self.cad = ''
+        self.restante = ''
+        self.numero_de_linea = 1
+ 
+        self.listado.escribir(str(self.numero_de_linea)+': '+self.restante) 
+
 
     def leer (self):
         if self.restante is "EOF":
             self.S = "_FIN"
-            return self.S
+            self.cad = ""
+            return (self.S, self.cad, self.numero_de_linea)
         else:
             if not self.restante:
                 self.numero_de_linea+=1
@@ -23,11 +27,21 @@ class Scanner:
                 if self.restante:
                     self.listado.escribir("\n")
                     self.listado.escribir(str(self.numero_de_linea)+': '+self.restante)
-                    (self.S,self.cad,self.restante) = \
-                        auxiliares.obtener_simbolo(self.restante, self.numero_de_linea)
+                    #(self.S,self.cad,self.restante) = \
+                    #    auxiliares.obtener_simbolo(self.restante, self.numero_de_linea)
+                    (self.S,self.cad,self.numero_de_linea) = self.leer()
             else:
                 (self.S,self.cad,self.restante) = \
                   auxiliares.obtener_simbolo(self.restante,self.numero_de_linea)
 
-            return self.S
+            #self.debugimprimir()
+            return (self.S, self.cad, self.numero_de_linea)
+
+
+    def debugimprimir(self):
+        print self.numero_de_linea
+        print "cad:",self.cad
+        print "S:",self.S
+        print
+
 

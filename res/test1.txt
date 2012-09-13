@@ -1,2 +1,5 @@
 CONST A=2;
-procedure RAIZ;
+VAR A,b,c,d;
+procedure MULTIPLICAR;
+CONST A=2;
+VAR a,b,c,d;
