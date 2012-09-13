@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
 
-from compilador.lexico import helpers
+from compilador.lexico import auxiliares
 
 def scanner (fuente, listado, terminal, S, cad, restante, numero_de_linea):
     if restante is "EOF":
@@ -13,9 +13,9 @@ def scanner (fuente, listado, terminal, S, cad, restante, numero_de_linea):
             if restante:
                 listado.escribir("\n")
                 listado.escribir(str(numero_de_linea)+': '+restante)
-                (S,cad,restante) = helpers.obtener_simbolo(restante,numero_de_linea)
+                (S,cad,restante) = auxiliares.obtener_simbolo(restante,numero_de_linea)
         else:
-            (S,cad,restante) = helpers.obtener_simbolo(restante,numero_de_linea)
+            (S,cad,restante) = auxiliares.obtener_simbolo(restante,numero_de_linea)
 
         return (listado,S,cad,restante,numero_de_linea)
 
