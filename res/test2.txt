@@ -1,7 +1,4 @@
-writeln 'hola';
-a : 1;
-const M = 7, N = 85;
-const M = 12312313616516191981561361613212313;
+const M = 7, N = 85, M = 3212313;
 var X, Y, Z, Q, R;
 procedure MULTIPLICAR;
 var A, B;
@@ -38,7 +35,7 @@ procedure MCD;
 var F, G;
 begin
 F := X;
-G : Y;
+G := Y;
 while F <> G do
 begin
 if F < G then G := G - F;

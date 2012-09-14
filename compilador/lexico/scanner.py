@@ -9,10 +9,13 @@ class Scanner:
         self.terminal = terminal
         self.S = ''
         self.cad = ''
-        self.restante = ''
         self.numero_de_linea = 1
- 
+        self.restante = fuente.leer_linea_sin_nl() 
         self.listado.escribir(str(self.numero_de_linea)+': '+self.restante) 
+
+
+    def obtener_sin_leer(self):
+        return (self.S, self.cad, self.numero_de_linea)
 
 
     def leer (self):
@@ -43,5 +46,4 @@ class Scanner:
         print "cad:",self.cad
         print "S:",self.S
         print
-
 

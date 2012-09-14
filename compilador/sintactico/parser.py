@@ -18,17 +18,18 @@ terminal = [
     'multiplicacion','division',
     'identificador','numero',
     '_writeln','_write','_readln',
+    'literal', '_FIN'
 ]
 
 def parser (fuente,listado):
 
-    restante = fuente.leer_linea_sin_nl()
-
     scanner = Scanner(fuente,listado,terminal)
+
+    scanner.leer()
 
     auxiliares.bloque (scanner)
 
-    (S,cadena,numero_de_linea) = scanner.leer()
+    (S,cadena,numero_de_linea) = scanner.obtener_sin_leer()
 
     if S is not "punto":
         errores.error_sintactico(errores.SE_ESPERABA_PUNTO,numero_de_linea)

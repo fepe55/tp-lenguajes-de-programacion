@@ -20,7 +20,7 @@ SE_ESPERABA_THEN = "Se esperaba THEN"
 SE_ESPERABA_DO = "Se esperaba DO"
 SE_ESPERABA_OPERADOR_RELACIONAL = "Se esperaba operador relacional"
 SE_ESPERABA_IDENTIFICADOR_NUMERO_PARENTESISAPERTURA = "Se esperaba un \
-  identificador, un número, o un paréntesis de apertura"
+identificador, un número, o un paréntesis de apertura"
 SE_ESPERABA_PARENTESISCIERRE = "Se esperaba un paréntesis de cierre"
 SE_ESPERABA_COMA_PARENTESISCIERRE = "Se esperaba una coma o un paréntesis de cierre"
 SE_ESPERABA_PARENTESISAPERTURA = "Se esperaba un paréntesis de apertura"

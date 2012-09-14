@@ -48,6 +48,7 @@ def numero_longitud_correcta(numero):
 def palabra_reservada(palabra):
     palabras_reservadas = ['begin', 'end', 'call', 'const', 'var', 
         'while', 'do', 'if', 'then', 'procedure', 'odd', 'eof',
+        'write', 'writeln', 'readln',
     ]
  
     if palabra.lower() in palabras_reservadas:
@@ -65,7 +66,7 @@ def obtener_simbolo (linea,numero_de_linea):
     while caracter is ' ':
         linea = linea[1:]
         caracter = linea[0]
-
+        
     if caracter in simbolos_de_un_caracter_unicos:
         cad = caracter
         S = terminos[caracter]
@@ -136,22 +137,23 @@ def obtener_simbolo (linea,numero_de_linea):
         return (S,cad,restante)
 
     #Literal
-    if caracter == '\'':
-        restante = linea
-        cad = '\''
-        restante = restante[1:]
+    if caracter == "'":
+        cad = "'"
         caracter = linea[1]
-        while caracter is not '\'':
+        restante = linea[2:]
+
+        while caracter != "'":
             try:
                 cad += caracter
-                restante = restante[1:]
                 caracter = restante[0]
+                restante = restante[1:]
             except IndexError:
                 errores.error_lexico(errores.FIN_INESPERADO_LITERAL,numero_de_linea)
                 break
-        cad = cad + '\''
+
+        cad = cad + "'"
         if longitud_correcta(cad):
-            S = '_literal'
+            S = 'literal'
         else:
             errores.error_lexico(errores.LITERAL_DEMASIADO_LARGO,numero_de_linea)
             S = '_nulo'
