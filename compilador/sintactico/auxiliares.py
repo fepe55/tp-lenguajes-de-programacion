@@ -122,10 +122,32 @@ def factor(scanner):
 
 
 def readln(scanner):
-    return True
+    (S,cadena,numero_de_linea) = scanner.leer()
+    if S is not "parentesisapertura":
+       errores.error_sintactico(errores.SE_ESPERABA_PARENTESISAPERTURA,numero_de_linea) 
+       return
+
+    (S,cadena,numero_de_linea) = scanner.leer()
+    if S is not "identificador":
+       errores.error_sintactico(errores.SE_ESPERABA_IDENTIFICADOR,numero_de_linea) 
+       return
+
+    (S,cadena,numero_de_linea) = scanner.leer()
+    while S is "coma" :
+        (S,cadena,numero_de_linea) = scanner.leer()
+        if S is not "identificador":
+            errores.error_sintactico(errores.SE_ESPERABA_IDENTIFICADOR,numero_de_linea)
+            return
+        (S,cadena,numero_de_linea) = scanner.leer()
+
+    if S is not "parentesiscierre":
+        errores.error_sintactico(errores.SE_ESPERABA_PARENTESISCIERRE,numero_de_linea)
+ 
+    return
 
 
 def write(scanner):
+
     return True
 
 
@@ -138,7 +160,7 @@ def proposicion(scanner):
     if S is "identificador":
         (S,cadena,numero_de_linea) = scanner.leer()
         if S is "asignacion":
-            expresion()
+            expresion(scanner)
         else:
             errores.error_sintactico(errores.SE_ESPERABA_ASIGNACION,numero_de_linea)
 
@@ -182,12 +204,15 @@ def proposicion(scanner):
 
     if S is "_writeln":
         #TODO
+        return
 
     if S is "_write":
         #TODO
+        return
 
     if S is "_readln":
         #TODO
+        return
 
 
     #Proposición vacía

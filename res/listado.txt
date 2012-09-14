@@ -5,3 +5,4 @@
 5: var A, B;
 6: begin
 7: A := X;
+8: B := Y;

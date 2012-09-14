@@ -23,7 +23,7 @@ SE_ESPERABA_IDENTIFICADOR_NUMERO_PARENTESISAPERTURA = "Se esperaba un \
   identificador, un número, o un paréntesis de apertura"
 SE_ESPERABA_PARENTESISCIERRE = "Se esperaba un paréntesis de cierre"
 SE_ESPERABA_COMA_PARENTESISCIERRE = "Se esperaba una coma o un paréntesis de cierre"
-SE_ESPERABA_PARENTESIS_DE_APERTURA = "Se esperaba un paréntesis de apertura"
+SE_ESPERABA_PARENTESISAPERTURA = "Se esperaba un paréntesis de apertura"
 
 FIN_INESPERADO_PROGRAMA = "Fin inesperado de programa"
 
