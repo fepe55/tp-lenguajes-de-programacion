@@ -1,0 +1,9 @@
+const K = 9;
+var V;
+procedure P;
+var X;
+begin
+X := K * 2;
+V := X
+end;
+call K.

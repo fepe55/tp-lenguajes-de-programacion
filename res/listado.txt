@@ -1,54 +1,9 @@
-1: const M = 7, N = 85;
-2: var X, Y, Z, Q, R;
-3: procedure MULTIPLICAR;
-4: var A, B;
+1: const K = 9;
+2: var V;
+3: procedure P;
+4: var X;
 5: begin
-6: A := X;
-7: B := Y;
-8: Z := 0;
-9: while B > 0 do
-10: begin
-11: if odd B then Z := Z + A;
-12: A := A * 2;
-13: B := B / 2
-14: end
-15: end;
-16: procedure DIVIDIR;
-17: var W;
-18: begin
-19: R := X;
-20: Q := 0;
-21: W := Y;
-22: write ('hola');
-23: writeln;
-24: writeln('hola tarola tarola');
-25: readln(A);
-26: while W <= R do W := W * 2;
-27: while W > Y do
-28: begin
-29: Q := Q * 2;
-30: W := W / 2;
-31: if W <= R then
-32: begin
-33: R := R - W;
-34: Q := Q + 1
-35: end
-36: end
-37: end;
-38: procedure MCD;
-39: var F, G;
-40: begin
-41: F := X;
-42: G := Y;
-43: while F <> G do
-44: begin
-45: if F < G then G := G - F;
-46: if G < F then F := F - G
-47: end;
-48: Z := F
-49: end;
-50: begin
-51: X := M; Y := N; call MULTIPLICAR;
-52: X := 25; Y := 3; call DIVIDIR;
-53: X := 84; Y := 36; call MCD
-54: end.
+6: X := K * 2;
+7: V := X
+8: end;
+9: call K.
