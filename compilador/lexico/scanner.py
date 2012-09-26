@@ -18,7 +18,7 @@ class Scanner:
         return (self.S, self.cad, self.numero_de_linea)
 
 
-    def leer (self):
+    def leer (self,errores):
         if self.restante is "EOF":
             self.S = "_FIN"
             self.cad = ""
@@ -32,10 +32,10 @@ class Scanner:
                     self.listado.escribir(str(self.numero_de_linea)+': '+self.restante)
                     #(self.S,self.cad,self.restante) = \
                     #    auxiliares.obtener_simbolo(self.restante, self.numero_de_linea)
-                    (self.S,self.cad,self.numero_de_linea) = self.leer()
+                    (self.S,self.cad,self.numero_de_linea) = self.leer(errores)
             else:
                 (self.S,self.cad,self.restante) = \
-                  auxiliares.obtener_simbolo(self.restante,self.numero_de_linea)
+                  auxiliares.obtener_simbolo(self.restante,self.numero_de_linea,errores)
 
             #self.debugimprimir()
             return (self.S, self.cad, self.numero_de_linea)

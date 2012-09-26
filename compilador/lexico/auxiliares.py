@@ -2,7 +2,7 @@
 
 MAXIMO_TAMANIO_IDENTIFICADOR = 25
 
-from compilador.utils import errores
+#from compilador.utils import errores
 
 terminos = {
     'const'     : '_const',
@@ -56,7 +56,7 @@ def palabra_reservada(palabra):
     else :
         return 'identificador'
 
-def obtener_simbolo (linea,numero_de_linea):
+def obtener_simbolo (linea,numero_de_linea,errores):
 
     simbolos_de_un_caracter_unicos = ['=',',','.',';','(',')','+','-','*','/']
 

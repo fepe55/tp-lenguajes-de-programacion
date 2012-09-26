@@ -1,9 +1,15 @@
-1: const K = 9;
-2: var V;
-3: procedure P;
-4: var X;
+1: const M = 7, N = 85;
+2: var X, Y, Z, Q, R;
+3: procedure MULTIPLICAR;
+4: var A B;
 5: begin
-6: X := K * 2;
-7: V := X
-8: end;
-9: call K.
+6: A := X;
+7: B := Y;
+8: Z := 0;
+9: while B > 0 do
+10: begin
+11: if odd B then Z := Z + A;
+12: A := A * 2;
+13: B := B / 2
+14: end
+15: end;

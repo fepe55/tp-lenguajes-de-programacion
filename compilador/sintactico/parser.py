@@ -2,7 +2,7 @@
 
 from compilador.lexico.scanner import Scanner
 from compilador.sintactico import auxiliares
-from compilador.utils import errores
+from compilador.utils.errores import GestorDeErrores
 
 terminal = [
     '_nulo','_begin','_end',
@@ -23,14 +23,16 @@ terminal = [
 
 def parser (fuente,listado):
 
+    errores = GestorDeErrores()
     scanner = Scanner(fuente,listado,terminal)
 
-    scanner.leer()
+    scanner.leer(errores)
 
-    auxiliares.bloque (scanner)
+    auxiliares.bloque (scanner,errores)
 
     (S,cadena,numero_de_linea) = scanner.obtener_sin_leer()
 
     if S is not "punto":
         errores.error_sintactico(errores.SE_ESPERABA_PUNTO,numero_de_linea)
 
+    errores.resumen()
