@@ -28,7 +28,7 @@ def parser (fuente,listado):
 
     scanner.leer(errores)
 
-    auxiliares.bloque (scanner,errores)
+    auxiliares.bloque (scanner,errores,0)
 
     (S,cadena,numero_de_linea) = scanner.obtener_sin_leer()
 

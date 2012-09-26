@@ -201,4 +201,3 @@ def obtener_simbolo (linea,numero_de_linea,errores):
     restante = linea[1:]
     S = '_nulo'
     return (S,cad,restante)
-

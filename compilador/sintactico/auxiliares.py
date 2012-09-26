@@ -4,7 +4,7 @@
 
 # Precondición: Entro con una lectura hecha en el parser
 # Poscondición: Devuelvo una lectura más.
-def constante (scanner,errores):
+def constante (scanner,errores,desplazamiento):
     (S,cadena,numero_de_linea) = scanner.obtener_sin_leer()
     if S is not "identificador":
         errores.error_sintactico(errores.SE_ESPERABA_IDENTIFICADOR,numero_de_linea)
@@ -24,19 +24,19 @@ def constante (scanner,errores):
     if S is not "puntoycoma":
         if S is "coma":
             (S,cadena,numero_de_linea) = scanner.leer(errores)
-            constante(scanner,errores)
-            return
+            desplazamiento = constante(scanner,errores,desplazamiento)
+            return desplazamiento
         else:
             errores.error_sintactico(errores.SE_ESPERABA_COMA_PUNTOYCOMA,numero_de_linea)
             return
 
     (S,cadena,numero_de_linea) = scanner.leer(errores)
-    return
+    return desplazamiento
 
 
 # Precondición: Entro con una lectura hecha en el parser
 # Poscondición: Devuelvo una lectura más.
-def variable(scanner,errores):
+def variable(scanner,errores,desplazamiento):
     (S,cadena,numero_de_linea) = scanner.obtener_sin_leer()
     if S is not "identificador":
         errores.error_sintactico(errores.SE_ESPERABA_IDENTIFICADOR,numero_de_linea)
@@ -46,19 +46,19 @@ def variable(scanner,errores):
     if S is not "puntoycoma":
         if S is "coma":
             (S,cadena,numero_de_linea) = scanner.leer(errores)
-            variable(scanner,errores)
-            return
+            desplazamiento = variable(scanner,errores,desplazamiento)
+            return desplazamiento
         else:
             errores.error_sintactico(errores.SE_ESPERABA_COMA_PUNTOYCOMA,numero_de_linea)
             return
 
     (S,cadena,numero_de_linea) = scanner.leer(errores)
-    return
+    return desplazamiento
 
 
 # Precondición: Entro con una lectura hecha en el parser
 # Poscondición: Devuelvo una lectura más.
-def procedimiento(scanner,errores):
+def procedimiento(scanner,errores,base):
     (S,cadena,numero_de_linea) = scanner.obtener_sin_leer()
     if S is not "identificador":
         errores.error_sintactico(errores.SE_ESPERABA_IDENTIFICADOR,numero_de_linea)
@@ -70,7 +70,7 @@ def procedimiento(scanner,errores):
         return
 
     (S,cadena,numero_de_linea) = scanner.leer(errores)
-    bloque(scanner,errores) 
+    bloque(scanner,errores,base) 
 
     (S,cadena,numero_de_linea) = scanner.obtener_sin_leer()
     if S is not "puntoycoma":
@@ -349,24 +349,25 @@ def proposicion(scanner,errores):
 
 # Precondición: Entro con una lectura hecha en el parser
 # Poscondición: Devuelvo una lectura más.
-def bloque (scanner,errores):
+def bloque (scanner,errores,base):
+    desplazamiento = 0
     (S,cadena,numero_de_linea) = scanner.obtener_sin_leer()
     if S is "_const":
         # Hay declaración de constantes
         (S,cadena,numero_de_linea) = scanner.leer(errores)
-        constante(scanner,errores)
+        desplazamiento = constante(scanner,errores,desplazamiento)
         (S,cadena,numero_de_linea) = scanner.obtener_sin_leer()
 
     if S is "_var":
         # Hay declaración de variables
         (S,cadena,numero_de_linea) = scanner.leer(errores)
-        variable(scanner,errores)
+        desplazamiento = variable(scanner,errores,desplazamiento)
         (S,cadena,numero_de_linea) = scanner.obtener_sin_leer()
 
     while S is "_procedure":
         # Hay declaración de procedimientos
         (S,cadena,numero_de_linea) = scanner.leer(errores)
-        procedimiento(scanner,errores)
+        desplazamiento = procedimiento(scanner,errores,base+desplazamiento)
         (S,cadena,numero_de_linea) = scanner.obtener_sin_leer()
 
     proposicion(scanner,errores)
