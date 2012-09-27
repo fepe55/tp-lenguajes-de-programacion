@@ -1,7 +1,7 @@
 const M = 7, N = 85, M = 3212313;
 var X, Y, Z, Q, R;
 procedure MULTIPLICAR;
-var A, B;
+var A, B, X, A;
 begin
 A := X;
 B := Y;

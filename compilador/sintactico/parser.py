@@ -1,9 +1,9 @@
 # -*- encoding: utf-8 -*-
 
 from compilador.lexico.scanner import Scanner
-from compilador.sintactico import auxiliares
 from compilador.semantico.analizador import AnalizadorSemantico
 from compilador.utils.errores import GestorDeErrores
+from compilador.sintactico import auxiliares
 
 terminal = [
     '_nulo','_begin','_end',
@@ -24,9 +24,9 @@ terminal = [
 
 def parser (fuente,listado):
 
-    errores = GestorDeErrores()
     scanner = Scanner(fuente,listado,terminal)
     semantico = AnalizadorSemantico()
+    errores = GestorDeErrores()
 
     scanner.leer(errores)
 

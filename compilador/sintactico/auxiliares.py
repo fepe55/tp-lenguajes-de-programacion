@@ -2,7 +2,7 @@
 
 # Precondición: Entro con una lectura hecha en el parser
 # Poscondición: Devuelvo una lectura más.
-def constante (scanner,errores,semantico,desplazamiento):
+def constante (scanner,errores,semantico,base,desplazamiento):
     (S,cadena,numero_de_linea) = scanner.obtener_sin_leer()
     if S is not "identificador":
         errores.error_sintactico(errores.SE_ESPERABA_IDENTIFICADOR,S,cadena,numero_de_linea)
@@ -26,22 +26,22 @@ def constante (scanner,errores,semantico,desplazamiento):
     if S is not "puntoycoma":
         if S is "coma":
             (S,cadena,numero_de_linea) = scanner.leer(errores)
-            print "Definida la constante",nombre_constante,"con valor",valor
-            print "Se guardará en la tabla, posicion",desplazamiento
+            #debug print "Definida la constante",nombre_constante,"con valor",valor
+            #debug print "Se guardará en la tabla, posicion",desplazamiento
+            #debug print
+            semantico.cargar (base,desplazamiento,nombre_constante,"_const",valor,errores,numero_de_linea)
             desplazamiento += 1
-            print
-            semantico.cargar (desplazamiento,nombre_constante,"_const",valor,errores)
-            desplazamiento = constante(scanner,errores,semantico,desplazamiento)
+            desplazamiento = constante(scanner,errores,semantico,base,desplazamiento)
             return desplazamiento
         else:
             errores.error_sintactico(errores.SE_ESPERABA_COMA_PUNTOYCOMA,S,cadena,numero_de_linea)
             return
 
-    print "Definida la constante",nombre_constante,"con valor",valor
-    print "Se guardará en la tabla, posicion",desplazamiento
+    #debug print "Definida la constante",nombre_constante,"con valor",valor
+    #debug print "Se guardará en la tabla, posicion",desplazamiento
+    #debug print
+    semantico.cargar (base,desplazamiento,nombre_constante,"_const",valor,errores,numero_de_linea)
     desplazamiento += 1
-    print
-    semantico.cargar (desplazamiento,nombre_constante,"_const",valor,errores)
 
     (S,cadena,numero_de_linea) = scanner.leer(errores)
     return desplazamiento
@@ -49,7 +49,7 @@ def constante (scanner,errores,semantico,desplazamiento):
 
 # Precondición: Entro con una lectura hecha en el parser
 # Poscondición: Devuelvo una lectura más.
-def variable(scanner,errores,semantico,desplazamiento):
+def variable(scanner,errores,semantico,base,desplazamiento):
     (S,cadena,numero_de_linea) = scanner.obtener_sin_leer()
     if S is not "identificador":
         errores.error_sintactico(errores.SE_ESPERABA_IDENTIFICADOR,S,cadena,numero_de_linea)
@@ -60,22 +60,22 @@ def variable(scanner,errores,semantico,desplazamiento):
     if S is not "puntoycoma":
         if S is "coma":
             (S,cadena,numero_de_linea) = scanner.leer(errores)
-            print "Definida la variable",nombre_variable
-            print "Se guardará en la tabla, posicion",desplazamiento
+            #debug print "Definida la variable",nombre_variable
+            #debug print "Se guardará en la tabla, posicion",desplazamiento
+            #debug print
+            semantico.cargar (base,desplazamiento,nombre_variable,"_var",0,errores,numero_de_linea)
             desplazamiento += 1
-            print
-            semantico.cargar (desplazamiento,nombre_variable,"_var",0,errores)
-            desplazamiento = variable(scanner,errores,semantico,desplazamiento)
+            desplazamiento = variable(scanner,errores,semantico,base,desplazamiento)
             return desplazamiento
         else:
             errores.error_sintactico(errores.SE_ESPERABA_COMA_PUNTOYCOMA,S,cadena,numero_de_linea)
             return
 
-    print "Definida la variable",nombre_variable
-    print "Se guardará en la tabla, posicion",desplazamiento
+    #debug print "Definida la variable",nombre_variable
+    #debug print "Se guardará en la tabla, posicion",desplazamiento
+    #debug print
+    semantico.cargar (base,desplazamiento,nombre_variable,"_var",0,errores,numero_de_linea)
     desplazamiento += 1
-    print
-    semantico.cargar (desplazamiento,nombre_variable,"_var",0,errores)
     (S,cadena,numero_de_linea) = scanner.leer(errores)
     return desplazamiento
 
@@ -94,11 +94,11 @@ def procedimiento(scanner,errores,semantico,base,desplazamiento):
         errores.error_sintactico(errores.SE_ESPERABA_PUNTOYCOMA,S,cadena,numero_de_linea)
         return
 
-    print "Definido el procedimiento",nombre_procedimiento
-    print "Se guardará en la tabla, posicion",desplazamiento
+    #debug print "Definido el procedimiento",nombre_procedimiento
+    #debug print "Se guardará en la tabla, posicion",desplazamiento
+    #debug print
+    semantico.cargar (base,desplazamiento,nombre_procedimiento,"_procedure",0,errores,numero_de_linea)
     desplazamiento += 1
-    print
-    semantico.cargar (desplazamiento,nombre_procedimiento,"_procedure",0,errores)
  
     (S,cadena,numero_de_linea) = scanner.leer(errores)
     bloque(scanner,errores,semantico,base+desplazamiento) 
@@ -389,13 +389,13 @@ def bloque (scanner,errores,semantico,base):
     if S is "_const":
         # Hay declaración de constantes
         (S,cadena,numero_de_linea) = scanner.leer(errores)
-        desplazamiento = constante(scanner,errores,semantico,base+desplazamiento)
+        desplazamiento = constante(scanner,errores,semantico,base,desplazamiento)
         (S,cadena,numero_de_linea) = scanner.obtener_sin_leer()
 
     if S is "_var":
         # Hay declaración de variables
         (S,cadena,numero_de_linea) = scanner.leer(errores)
-        desplazamiento = variable(scanner,errores,semantico,base+desplazamiento)
+        desplazamiento = variable(scanner,errores,semantico,base,desplazamiento)
         (S,cadena,numero_de_linea) = scanner.obtener_sin_leer()
 
     while S is "_procedure":
