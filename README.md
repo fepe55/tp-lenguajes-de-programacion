@@ -1,4 +1,4 @@
-tp-lenguajes-de-programacion
+Trabajo Práctico - Lenguajes de Programación
 ============================
 
 TP de Lenguajes de Programación (FIUBA)
