@@ -1,2 +1,50 @@
-1: 
-2: EOF
+1: const M = 7, N = 85, M = 3212313;
+2: var X, Y, Z, Q, R;
+3: procedure MULTIPLICAR;
+4: var A, B;
+5: begin
+6: A := X;
+7: B := Y;
+8: Z := 0;
+9: while B > 0 do
+10: begin
+11: if odd B then Z := Z + A;
+12: A := A * 2;
+13: B := B / 2
+14: end
+15: end;
+16: procedure DIVIDIR;
+17: var W;
+18: begin
+19: R := X;
+20: Q := 0;
+21: W := Y;
+22: while W <= R do W := W * 2;
+23: while W > Y do
+24: begin
+25: Q := Q * 2;
+26: W := W / 2;
+27: if W <= R then
+28: begin
+29: R := R - W;
+30: Q := Q + 1
+31: end
+32: end
+33: end;
+34: procedure MCD;
+35: var F, G;
+36: begin
+37: F := X;
+38: G := Y;
+39: while F <> G do
+40: begin
+41: if F < G then G := G - F;
+42: if G < F then F := F - G
+43: end;
+44: Z := F
+45: end;
+46: begin
+47: X := M; Y := N; call MULTIPLICAR;
+48: X := 25; Y := 3; call DIVIDIR;
+49: X := 84; Y := 36; call MCD
+50: end.

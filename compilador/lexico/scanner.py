@@ -38,11 +38,11 @@ class Scanner:
                 (self.S,self.cad,self.restante) = \
                   auxiliares.obtener_simbolo(self.restante,self.numero_de_linea,errores)
 
-            #self.debugimprimir()
+            #self.debug_imprimir()
             return (self.S, self.cad, self.numero_de_linea)
 
 
-    def debugimprimir(self):
+    def debug_imprimir(self):
         print self.numero_de_linea
         print "cad:",self.cad
         print "S:",self.S

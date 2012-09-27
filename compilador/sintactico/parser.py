@@ -2,6 +2,7 @@
 
 from compilador.lexico.scanner import Scanner
 from compilador.sintactico import auxiliares
+from compilador.semantico.analizador import AnalizadorSemantico
 from compilador.utils.errores import GestorDeErrores
 
 terminal = [
@@ -25,14 +26,17 @@ def parser (fuente,listado):
 
     errores = GestorDeErrores()
     scanner = Scanner(fuente,listado,terminal)
+    semantico = AnalizadorSemantico()
 
     scanner.leer(errores)
 
-    auxiliares.bloque (scanner,errores,0)
+    auxiliares.bloque (scanner,errores,semantico,0)
 
     (S,cadena,numero_de_linea) = scanner.obtener_sin_leer()
 
     if S is not "punto":
         errores.error_sintactico(errores.SE_ESPERABA_PUNTO,S,cadena,numero_de_linea)
 
-    errores.resumen()
+    semantico.debug_imprimir_tabla()
+
+    return errores.resumen()
