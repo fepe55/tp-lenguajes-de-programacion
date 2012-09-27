@@ -33,6 +33,6 @@ def parser (fuente,listado):
     (S,cadena,numero_de_linea) = scanner.obtener_sin_leer()
 
     if S is not "punto":
-        errores.error_sintactico(errores.SE_ESPERABA_PUNTO,numero_de_linea)
+        errores.error_sintactico(errores.SE_ESPERABA_PUNTO,S,cadena,numero_de_linea)
 
     errores.resumen()

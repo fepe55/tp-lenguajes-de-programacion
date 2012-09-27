@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
 
-MAXIMO_TAMANIO_IDENTIFICADOR = 25
+MAXIMO_TAMANIO_IDENTIFICADOR = 64
 
 #from compilador.utils import errores
 

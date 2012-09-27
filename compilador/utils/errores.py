@@ -41,22 +41,27 @@ class GestorDeErrores:
     def error_lexico(self,mensaje,numero_de_linea):
         #print "Error léxico:",mensaje,"en la línea",numero_de_linea
         a = {
+            "tipo" : "lexico",
             "linea" : numero_de_linea,
             "mensaje" : mensaje,
         }
         self.errores_lexicos.append(a)
 
-    def error_sintactico(self,mensaje,numero_de_linea):
+    def error_sintactico(self,mensaje,S,cadena,numero_de_linea):
         #print "Error sintáctico:",mensaje,"en la línea",numero_de_linea
         a = {
+            "tipo" : "sintactico",
             "linea" : numero_de_linea,
             "mensaje" : mensaje,
+            "S" : S,
+            "cadena" : cadena,
         }
         self.errores_sintacticos.append(a)
 
-    def error_semantico(self,mensaje,numero_de_linea):
+    def error_semantico(self,mensaje,S,cadena,numero_de_linea):
         #print "Error semántico:",mensaje,"en la línea",numero_de_linea
         a = {
+            "tipo" : "semantico",
             "linea" : numero_de_linea,
             "mensaje" : mensaje,
         }
@@ -67,4 +72,13 @@ class GestorDeErrores:
         + self.errores_semanticos,key=itemgetter('linea'))
         if errores:
             for error in errores:
-                print "Error sintáctico:",error["mensaje"],"en la línea",error["linea"]
+                if (error["tipo"] == "lexico"):
+                    print "Error",error["tipo"]+":",error["mensaje"],"en la línea",error["linea"]
+                if (error["tipo"] == "sintactico"):
+                    print "Error",error["tipo"]+":",error["mensaje"],"y se recibio un",error["S"],"(\""+error["cadena"]+"\")","en la línea",error["linea"]
+                if (error["tipo"] == "semantico"):
+                    print "Error",error["tipo"]+":",error["mensaje"],"en la línea",error["linea"]
+                return 1
+        else:
+            print "No hubo errores"
+            return 0

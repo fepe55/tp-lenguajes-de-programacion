@@ -25,14 +25,15 @@ class Scanner:
             return (self.S, self.cad, self.numero_de_linea)
         else:
             if not self.restante:
-                self.numero_de_linea+=1
-                self.restante = self.fuente.leer_linea_sin_nl()
-                if self.restante:
-                    self.listado.escribir("\n")
-                    self.listado.escribir(str(self.numero_de_linea)+': '+self.restante)
-                    #(self.S,self.cad,self.restante) = \
-                    #    auxiliares.obtener_simbolo(self.restante, self.numero_de_linea)
-                    (self.S,self.cad,self.numero_de_linea) = self.leer(errores)
+                while not self.restante :
+                    self.numero_de_linea+=1
+                    self.restante = self.fuente.leer_linea_sin_nl()
+
+                self.listado.escribir("\n")
+                self.listado.escribir(str(self.numero_de_linea)+': '+self.restante)
+                #(self.S,self.cad,self.restante) = \
+                #    auxiliares.obtener_simbolo(self.restante, self.numero_de_linea)
+                (self.S,self.cad,self.numero_de_linea) = self.leer(errores)
             else:
                 (self.S,self.cad,self.restante) = \
                   auxiliares.obtener_simbolo(self.restante,self.numero_de_linea,errores)

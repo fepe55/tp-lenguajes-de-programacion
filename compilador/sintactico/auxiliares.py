@@ -7,17 +7,17 @@
 def constante (scanner,errores,desplazamiento):
     (S,cadena,numero_de_linea) = scanner.obtener_sin_leer()
     if S is not "identificador":
-        errores.error_sintactico(errores.SE_ESPERABA_IDENTIFICADOR,numero_de_linea)
+        errores.error_sintactico(errores.SE_ESPERABA_IDENTIFICADOR,S,cadena,numero_de_linea)
         return
 
     (S,cadena,numero_de_linea) = scanner.leer(errores)
     if S is not "igual":
-        errores.error_sintactico(errores.SE_ESPERABA_IGUAL,numero_de_linea)
+        errores.error_sintactico(errores.SE_ESPERABA_IGUAL,S,cadena,numero_de_linea)
         return
 
     (S,cadena,numero_de_linea) = scanner.leer(errores)
     if S is not "numero":
-        errores.error_sintactico(errores.SE_ESPERABA_NUMERO,numero_de_linea)
+        errores.error_sintactico(errores.SE_ESPERABA_NUMERO,S,cadena,numero_de_linea)
         return
 
     (S,cadena,numero_de_linea) = scanner.leer(errores)
@@ -27,7 +27,7 @@ def constante (scanner,errores,desplazamiento):
             desplazamiento = constante(scanner,errores,desplazamiento)
             return desplazamiento
         else:
-            errores.error_sintactico(errores.SE_ESPERABA_COMA_PUNTOYCOMA,numero_de_linea)
+            errores.error_sintactico(errores.SE_ESPERABA_COMA_PUNTOYCOMA,S,cadena,numero_de_linea)
             return
 
     (S,cadena,numero_de_linea) = scanner.leer(errores)
@@ -39,7 +39,7 @@ def constante (scanner,errores,desplazamiento):
 def variable(scanner,errores,desplazamiento):
     (S,cadena,numero_de_linea) = scanner.obtener_sin_leer()
     if S is not "identificador":
-        errores.error_sintactico(errores.SE_ESPERABA_IDENTIFICADOR,numero_de_linea)
+        errores.error_sintactico(errores.SE_ESPERABA_IDENTIFICADOR,S,cadena,numero_de_linea)
         return
 
     (S,cadena,numero_de_linea) = scanner.leer(errores)
@@ -49,7 +49,7 @@ def variable(scanner,errores,desplazamiento):
             desplazamiento = variable(scanner,errores,desplazamiento)
             return desplazamiento
         else:
-            errores.error_sintactico(errores.SE_ESPERABA_COMA_PUNTOYCOMA,numero_de_linea)
+            errores.error_sintactico(errores.SE_ESPERABA_COMA_PUNTOYCOMA,S,cadena,numero_de_linea)
             return
 
     (S,cadena,numero_de_linea) = scanner.leer(errores)
@@ -61,24 +61,24 @@ def variable(scanner,errores,desplazamiento):
 def procedimiento(scanner,errores,base):
     (S,cadena,numero_de_linea) = scanner.obtener_sin_leer()
     if S is not "identificador":
-        errores.error_sintactico(errores.SE_ESPERABA_IDENTIFICADOR,numero_de_linea)
-        return
+        errores.error_sintactico(errores.SE_ESPERABA_IDENTIFICADOR,S,cadena,numero_de_linea)
+        return 0
 
     (S,cadena,numero_de_linea) = scanner.leer(errores)
     if S is not "puntoycoma":
-        errores.error_sintactico(errores.SE_ESPERABA_PUNTOYCOMA,numero_de_linea)
-        return
+        errores.error_sintactico(errores.SE_ESPERABA_PUNTOYCOMA,S,cadena,numero_de_linea)
+        return 0
 
     (S,cadena,numero_de_linea) = scanner.leer(errores)
     bloque(scanner,errores,base) 
 
     (S,cadena,numero_de_linea) = scanner.obtener_sin_leer()
     if S is not "puntoycoma":
-        errores.error_sintactico(errores.SE_ESPERABA_PUNTOYCOMA,numero_de_linea)
-        return
+        errores.error_sintactico(errores.SE_ESPERABA_PUNTOYCOMA,S,cadena,numero_de_linea)
+        return 0
 
     (S,cadena,numero_de_linea) = scanner.leer(errores)
-    return
+    return 0
 
 
 def es_operador_relacional(S):
@@ -113,7 +113,7 @@ def condicion(scanner,errores):
         expresion(scanner,errores)
         return
     else:
-        errores.error_sintactico(errores.SE_ESPERABA_OPERADOR_RELACIONAL)
+        errores.error_sintactico(errores.SE_ESPERABA_OPERADOR_RELACIONAL,S,cadena,numero_de_linea)
         return
 
 
@@ -166,13 +166,13 @@ def factor(scanner,errores):
         expresion(scanner,errores)
         (S,cadena,numero_de_linea) = scanner.obtener_sin_leer()
         if S is not "parentesiscierre":
-            errores.error_sintactico(errores.SE_ESPERABA_PARENTESISCIERRE,numero_de_linea)
+            errores.error_sintactico(errores.SE_ESPERABA_PARENTESISCIERRE,S,cadena,numero_de_linea)
             return
         (S,cadena,numero_de_linea) = scanner.leer(errores)
         return
 
     # No entró por ningún IF
-    errores.error_sintactico(errores.SE_ESPERABA_IDENTIFICADOR_NUMERO_PARENTESISAPERTURA,numero_de_linea)
+    errores.error_sintactico(errores.SE_ESPERABA_IDENTIFICADOR_NUMERO_PARENTESISAPERTURA,S,cadena,numero_de_linea)
     return
 
 
@@ -181,24 +181,24 @@ def factor(scanner,errores):
 def readln(scanner,errores):
     (S,cadena,numero_de_linea) = scanner.obtener_sin_leer()
     if S is not "parentesisapertura":
-       errores.error_sintactico(errores.SE_ESPERABA_PARENTESISAPERTURA,numero_de_linea) 
+       errores.error_sintactico(errores.SE_ESPERABA_PARENTESISAPERTURA,S,cadena,numero_de_linea) 
        return
 
     (S,cadena,numero_de_linea) = scanner.leer(errores)
     if S is not "identificador":
-       errores.error_sintactico(errores.SE_ESPERABA_IDENTIFICADOR,numero_de_linea) 
+       errores.error_sintactico(errores.SE_ESPERABA_IDENTIFICADOR,S,cadena,numero_de_linea) 
        return
 
     (S,cadena,numero_de_linea) = scanner.leer(errores)
     while S is "coma" :
         (S,cadena,numero_de_linea) = scanner.leer(errores)
         if S is not "identificador":
-            errores.error_sintactico(errores.SE_ESPERABA_IDENTIFICADOR,numero_de_linea)
+            errores.error_sintactico(errores.SE_ESPERABA_IDENTIFICADOR,S,cadena,numero_de_linea)
             return
         (S,cadena,numero_de_linea) = scanner.leer(errores)
 
     if S is not "parentesiscierre":
-        errores.error_sintactico(errores.SE_ESPERABA_PARENTESISCIERRE,numero_de_linea)
+        errores.error_sintactico(errores.SE_ESPERABA_PARENTESISCIERRE,S,cadena,numero_de_linea)
         return
 
     (S,cadena,numero_de_linea) = scanner.leer(errores)
@@ -211,6 +211,7 @@ def writeaux(scanner,errores):
     (S,cadena,numero_de_linea) = scanner.obtener_sin_leer()
     if S is not "literal":
         expresion(scanner,errores)
+        (S,cadena,numero_de_linea) = scanner.obtener_sin_leer()
     else:
         #Como es literal, leo uno más, que no tuve que leer en el caso de expresión
         (S,cadena,numero_de_linea) = scanner.leer(errores)
@@ -219,13 +220,15 @@ def writeaux(scanner,errores):
         (S,cadena,numero_de_linea) = scanner.leer(errores)
         if S is not "literal":
             expresion(scanner,errores)
+            (S,cadena,numero_de_linea) = scanner.obtener_sin_leer()
         else:
             #Como es literal, leo uno más, que no tuve que leer en el caso de expresión
             (S,cadena,numero_de_linea) = scanner.leer(errores)
 
+    (S,cadena,numero_de_linea) = scanner.obtener_sin_leer()
     # Cuando dejaron de aparecer comas, pregunto por el paréntesis de cierre
     if S is not "parentesiscierre":
-        errores.error_sintactico(errores.SE_ESPERABA_COMA_PARENTESISCIERRE,numero_de_linea)
+        errores.error_sintactico(errores.SE_ESPERABA_COMA_PARENTESISCIERRE,S,cadena,numero_de_linea)
         return
 
     (S,cadena,numero_de_linea) = scanner.leer(errores)
@@ -236,7 +239,7 @@ def writeaux(scanner,errores):
 def write(scanner,errores):
     (S,cadena,numero_de_linea) = scanner.obtener_sin_leer()
     if S is not "parentesisapertura":
-       errores.error_sintactico(errores.SE_ESPERABA_PARENTESISAPERTURA,numero_de_linea) 
+       errores.error_sintactico(errores.SE_ESPERABA_PARENTESISAPERTURA,S,cadena,numero_de_linea) 
        return
     
     # Es paréntesis de apertura, llamo a writeaux
@@ -269,7 +272,7 @@ def proposicion(scanner,errores):
             (S,cadena,numero_de_linea) = scanner.leer(errores)
             expresion(scanner,errores)
         else:
-            errores.error_sintactico(errores.SE_ESPERABA_ASIGNACION,numero_de_linea)
+            errores.error_sintactico(errores.SE_ESPERABA_ASIGNACION,S,cadena,numero_de_linea)
             return
 
         return
@@ -277,7 +280,7 @@ def proposicion(scanner,errores):
     if S is "_call":
         (S,cadena,numero_de_linea) = scanner.leer(errores)
         if S is not "identificador":
-            errores.error_sintactico(errores.SE_ESPERABA_IDENTIFICADOR,numero_de_linea)
+            errores.error_sintactico(errores.SE_ESPERABA_IDENTIFICADOR,S,cadena,numero_de_linea)
             return
         #Leo para cumplir la poscondición
         (S,cadena,numero_de_linea) = scanner.leer(errores)
@@ -296,7 +299,7 @@ def proposicion(scanner,errores):
 
         # Salgo del ciclo de proposiciones, debe ser END
         if S is not "_end":
-            errores.error_sintactico(errores.SE_ESPERABA_END_PUNTOYCOMA,numero_de_linea)
+            errores.error_sintactico(errores.SE_ESPERABA_END_PUNTOYCOMA,S,cadena,numero_de_linea)
             return
         #Leo para cumplir la poscondición
         (S,cadena,numero_de_linea) = scanner.leer(errores)
@@ -311,7 +314,7 @@ def proposicion(scanner,errores):
             proposicion(scanner,errores)
             (S,cadena,numero_de_linea) = scanner.obtener_sin_leer()
         else:
-            errores.error_sintactico(errores.SE_ESPERABA_THEN,numero_de_linea)
+            errores.error_sintactico(errores.SE_ESPERABA_THEN,S,cadena,numero_de_linea)
             return
         return
 
@@ -323,7 +326,7 @@ def proposicion(scanner,errores):
             (S,cadena,numero_de_linea) = scanner.leer(errores)
             proposicion(scanner,errores)
         else:
-            errores.error_sintactico(errores.SE_ESPERABA_DO,numero_de_linea)
+            errores.error_sintactico(errores.SE_ESPERABA_DO,S,cadena,numero_de_linea)
             return
 
         return
