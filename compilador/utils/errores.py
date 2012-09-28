@@ -35,7 +35,8 @@ class GestorDeErrores:
     VARIABLE_YA_DEFINIDA = "En este ámbito ya fue definida la variable"
     CONSTANTE_YA_DEFINIDA = "En este ámbito ya fue definida la constante"
     PROCEDURE_YA_DEFINIDO = "En este ámbito ya fue definido el procedimiento"
-
+    TIPO_INCORRECTO = "Tipo incorrecto"
+    NO_DECLARADO = "No declarado"
 
     def __init__(self):
         self.errores_lexicos = []
