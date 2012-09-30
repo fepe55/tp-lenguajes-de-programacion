@@ -10,6 +10,7 @@ class GestorDeErrores:
     FIN_INESPERADO_LITERAL = "Fin inesperado de un literal"
     LITERAL_DEMASIADO_LARGO = "Literal demasiado largo"
     SE_ESPERABA_IGUAL = "Se esperaba un igual"
+    COMILLAS_EN_LUGAR_DE_APOSTROFO = "El literal se debe delimitar por apóstrofos en lugar de comillas"
 
     # Errores sintácticos
     SE_ESPERABA_PUNTO = "Se esperaba un punto"
@@ -24,7 +25,7 @@ class GestorDeErrores:
     SE_ESPERABA_DO = "Se esperaba DO"
     SE_ESPERABA_OPERADOR_RELACIONAL = "Se esperaba operador relacional"
     SE_ESPERABA_IDENTIFICADOR_NUMERO_PARENTESISAPERTURA = "Se esperaba un \
-    identificador, un número, o un paréntesis de apertura"
+identificador, un número, o un paréntesis de apertura"
     SE_ESPERABA_PARENTESISCIERRE = "Se esperaba un paréntesis de cierre"
     SE_ESPERABA_COMA_PARENTESISCIERRE = "Se esperaba una coma o un paréntesis de cierre"
     SE_ESPERABA_PARENTESISAPERTURA = "Se esperaba un paréntesis de apertura"
@@ -37,6 +38,7 @@ class GestorDeErrores:
     PROCEDURE_YA_DEFINIDO = "En este ámbito ya fue definido el procedimiento"
     TIPO_INCORRECTO = "Tipo incorrecto"
     NO_DECLARADO = "No declarado"
+    DEMASIADAS_DECLARACIONES = "Demasiadas declaraciones"
 
     def __init__(self):
         self.errores_lexicos = []
@@ -77,6 +79,10 @@ class GestorDeErrores:
         errores = sorted(self.errores_lexicos + self.errores_sintacticos \
         + self.errores_semanticos,key=itemgetter('linea'))
         if errores:
+            if len(errores) == 1:
+                print "Hubo",len(errores),"error"
+            else: 
+                print "Hubo",len(errores),"errores"
             for error in errores:
                 if (error["tipo"] == "lexico"):
                     print "Error",error["tipo"]+":",error["mensaje"],"en la línea",error["linea"]
@@ -84,7 +90,7 @@ class GestorDeErrores:
                     print "Error",error["tipo"]+":",error["mensaje"],"y se recibio un",error["S"],"(\""+error["cadena"]+"\")","en la línea",error["linea"]
                 if (error["tipo"] == "semantico"):
                     print "Error",error["tipo"]+":",error["mensaje"],error["cadena"],"en la línea",error["linea"]
-                return 1
+            return len(errores)
         else:
             print "No hubo errores"
             return 0

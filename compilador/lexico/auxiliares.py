@@ -137,12 +137,14 @@ def obtener_simbolo (linea,numero_de_linea,errores):
         return (S,cad,restante)
 
     #Literal
-    if caracter == "'":
+    if caracter == "'" or caracter == "\"":
+        if caracter ==  "\"":
+            errores.error_lexico(errores.COMILLAS_EN_LUGAR_DE_APOSTROFO,numero_de_linea)
         cad = "'"
         caracter = linea[1]
         restante = linea[2:]
 
-        while caracter != "'":
+        while caracter != "'" and caracter != "\"":
             try:
                 cad += caracter
                 caracter = restante[0]

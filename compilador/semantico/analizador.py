@@ -17,20 +17,20 @@ class AnalizadorSemantico:
         # localmente. En caso de no encontrarse el identificador, deberá 
         # darse aviso de la falta de declaración.
         i = base+desplazamiento-1
-        while i>=0 :
-         if self.tabla[i]:
-          if self.tabla[i]["nombre"] == nombre:
-           tipo_erroneo = 0
-           for tipo in tipos_esperados:
-            if self.tabla[i]["tipo"] != tipo:
-             tipo_erroneo += 1
-           if tipo_erroneo == len(tipos_esperados):
-            errores.error_semantico(errores.TIPO_INCORRECTO,nombre,numero_de_linea)
-            return
-           else:
-            return self.tabla[i]["valor"] # Probablemente luego haga falta
-         i-=1
-             
+        if i<CANT_MAX_IDENT:
+         while i>=0 :
+          if self.tabla[i]:
+           if self.tabla[i]["nombre"] == nombre:
+            tipo_erroneo = 0
+            for tipo in tipos_esperados:
+             if self.tabla[i]["tipo"] != tipo:
+              tipo_erroneo += 1
+            if tipo_erroneo == len(tipos_esperados):
+             errores.error_semantico(errores.TIPO_INCORRECTO,nombre,numero_de_linea)
+             return
+            else:
+             return self.tabla[i]["valor"] # Probablemente luego haga falta
+          i-=1
              
 
         errores.error_semantico(errores.NO_DECLARADO,nombre,numero_de_linea)
@@ -41,44 +41,44 @@ class AnalizadorSemantico:
         # No debería estar cargado el mismo elemento entre 
         # base y base+deplazamiento-1
 
-        i = base
-        while i<base+desplazamiento:
-         if self.tabla[i]:
-          if self.tabla[i]["tipo"] == tipo:
-           if self.tabla[i]["nombre"] == nombre:
-            #print "Ya se definió la",tipo,nombre,"en este ámbito"
-            if tipo is "_const":
-             errores.error_semantico(errores.CONSTANTE_YA_DEFINIDA,nombre,numero_de_linea)
-            if tipo is "_var":
-             errores.error_semantico(errores.VARIABLE_YA_DEFINIDA,nombre,numero_de_linea)
-            if tipo is "_procedure":
-             errores.error_semantico(errores.PROCEDURE_YA_DEFINIDO,nombre,numero_de_linea)
-         i+=1
+        if (base+desplazamiento)<CANT_MAX_IDENT-1:
 
-        posicion = base+desplazamiento
-        if posicion < CANT_MAX_IDENT:
-            elemento = {
-                "nombre" : nombre,
-                "tipo" : tipo,
-            }
+         i = base
+         while i<base+desplazamiento:
+          if self.tabla[i]:
+           if self.tabla[i]["tipo"] == tipo:
+            if self.tabla[i]["nombre"] == nombre:
+             if tipo is "_const":
+              errores.error_semantico(errores.CONSTANTE_YA_DEFINIDA,nombre,numero_de_linea)
+             if tipo is "_var":
+              errores.error_semantico(errores.VARIABLE_YA_DEFINIDA,nombre,numero_de_linea)
+             if tipo is "_procedure":
+              errores.error_semantico(errores.PROCEDURE_YA_DEFINIDO,nombre,numero_de_linea)
+          i+=1
 
-            if tipo is "_const":
-                elemento ['valor'] = valor
+         posicion = base+desplazamiento
+         elemento = {
+             "nombre" : nombre,
+             "tipo" : tipo,
+         }
 
-            if tipo is "_var":
-                elemento ['valor'] = self.cant_variables*SIZE_OF_INT
-                self.cant_variables += 1
-                if self.cant_variables >= CANT_MAX_VAR :
-                    errores.error_semantico
+         if tipo is "_const":
+             elemento ['valor'] = valor
 
-            if tipo is "_procedure":
-                elemento ['valor'] = 0
+         if tipo is "_var":
+             elemento ['valor'] = self.cant_variables*SIZE_OF_INT
+             self.cant_variables += 1
+             if self.cant_variables >= CANT_MAX_VAR :
+                 errores.error_semantico
 
-            self.tabla[posicion] = elemento
+         if tipo is "_procedure":
+             elemento ['valor'] = 0
 
-        #else:
+         self.tabla[posicion] = elemento
+
+        else:
             # Error semántico
-            # error_semantico(
+            errores.error_semantico(errores.DEMASIADAS_DECLARACIONES,nombre,numero_de_linea)
 
         return
 

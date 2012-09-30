@@ -22,11 +22,13 @@ class Scanner:
         if self.restante is "EOF":
             self.S = "_FIN"
             self.cad = ""
+            errores.error_lexico(errores.FIN_INESPERADO_PROGRAMA,self.numero_de_linea)
             return (self.S, self.cad, self.numero_de_linea)
         else:
             if not self.restante:
                 while not self.restante :
                     self.numero_de_linea+=1
+                    #self.listado.escribir("\n")
                     self.restante = self.fuente.leer_linea_sin_nl()
 
                 self.listado.escribir("\n")
