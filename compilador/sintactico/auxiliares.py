@@ -2,7 +2,7 @@
 
 comienzo_de_proposicion = [ 
     '_call', '_begin', '_if', '_while', '_writeln',
-    '_write', '_readln',
+    '_write', '_readln', 
 ]
 
 simbolos_de_sincronizacion = [
@@ -14,11 +14,12 @@ simbolos_de_sincronizacion = [
 # Poscondición: Devuelvo una lectura más.
 def panico (scanner,errores):
     (S,cadena,numero_de_linea) = scanner.obtener_sin_leer()
+    print "Entré a pánico con ",S,cadena
     while S not in simbolos_de_sincronizacion:
         (S,cadena,numero_de_linea) = scanner.leer(errores)
 
-    #(S,cadena,numero_de_linea) = scanner.leer(errores)
-    print "Panic!\n" #debug
+    print "Y salgo de pánico con ",S,cadena
+
     return 
 
 
@@ -291,10 +292,9 @@ def write(scanner,semantico,base,desplazamiento,errores):
     (S,cadena,numero_de_linea) = scanner.obtener_sin_leer()
     if S is not "parentesisapertura":
        errores.error_sintactico(errores.SE_ESPERABA_PARENTESISAPERTURA,S,cadena,numero_de_linea) 
-       return
-
-    # Es paréntesis de apertura, llamo a writeaux
-    (S,cadena,numero_de_linea) = scanner.leer(errores)
+    else :
+        # Es paréntesis de apertura, llamo a writeaux
+        (S,cadena,numero_de_linea) = scanner.leer(errores)
     writeaux(scanner,semantico,base,desplazamiento,errores)
     return
 
@@ -367,11 +367,9 @@ def proposicion(scanner,semantico,base,desplazamiento,errores):
                 S = "puntoycoma"
             else:
                 panico(scanner,errores)
-                (S,cadena,numero_de_linea) = scanner.obtener_sin_leer() #debug
-                print "Llamo a proposicion habiendo leido",S,cadena #debug
                 proposicion(scanner,semantico,base,desplazamiento,errores)
+                (S,cadena,numero_de_linea) = scanner.obtener_sin_leer()
 
-        (S,cadena,numero_de_linea) = scanner.obtener_sin_leer()
         while S is "puntoycoma":
             if Saux:
                 S = Saux
