@@ -167,6 +167,9 @@ def condicion(scanner,semantico,base,desplazamiento,errores):
         return
     else:
         errores.error_sintactico(errores.SE_ESPERABA_OPERADOR_RELACIONAL,S,cadena,numero_de_linea)
+        #Manejo de errores, asumo error. Sustitución por operador relacional
+        (S,cadena,numero_de_linea) = scanner.leer(errores)
+        expresion(scanner,semantico,base,desplazamiento,errores)
         return
 
 
@@ -236,11 +239,13 @@ def readln(scanner,semantico,base,desplazamiento,errores):
     (S,cadena,numero_de_linea) = scanner.obtener_sin_leer()
     if S is not "parentesisapertura":
        errores.error_sintactico(errores.SE_ESPERABA_PARENTESISAPERTURA,S,cadena,numero_de_linea) 
-       return
+        #Manejo de errores, si no es paréntesis de apertura, inserción.
+    else:
+        (S,cadena,numero_de_linea) = scanner.leer(errores)
 
-    (S,cadena,numero_de_linea) = scanner.leer(errores)
     if S is not "identificador":
        errores.error_sintactico(errores.SE_ESPERABA_IDENTIFICADOR,S,cadena,numero_de_linea) 
+       panico(scanner,errores)
        return
 
     (S,cadena,numero_de_linea) = scanner.leer(errores)
@@ -254,9 +259,10 @@ def readln(scanner,semantico,base,desplazamiento,errores):
 
     if S is not "parentesiscierre":
         errores.error_sintactico(errores.SE_ESPERABA_PARENTESISCIERRE,S,cadena,numero_de_linea)
-        return
+        #Manejo de errores, si no es paréntesis de cierre, inserción.
+    else:
+        (S,cadena,numero_de_linea) = scanner.leer(errores)
 
-    (S,cadena,numero_de_linea) = scanner.leer(errores)
     return
 
 
@@ -322,7 +328,13 @@ def proposicion(scanner,semantico,base,desplazamiento,errores):
     (S,cadena,numero_de_linea) = scanner.obtener_sin_leer()
 
     if S is "identificador":
-        semantico.validar(base,desplazamiento,cadena,("_var",),errores,numero_de_linea) 
+        (codigo,valor) = semantico.validar(base,desplazamiento,cadena,("_var",),errores,numero_de_linea) 
+        if codigo == -1:
+            tipo = valor
+            if tipo is "_procedure":
+                # Faltó el call, el error lo tiró el semántico
+                (S,cadena,numero_de_linea) = scanner.leer(errores)
+                return
         (S,cadena,numero_de_linea) = scanner.leer(errores)
         if S is "asignacion":
             (S,cadena,numero_de_linea) = scanner.leer(errores)
@@ -408,6 +420,13 @@ def proposicion(scanner,semantico,base,desplazamiento,errores):
             proposicion(scanner,semantico,base,desplazamiento,errores)
         else:
             errores.error_sintactico(errores.SE_ESPERABA_DO,S,cadena,numero_de_linea)
+            #Manejo de errores, si en vez de "_do" es "_then", supongo error. Sustitución.
+            if S is "_then":
+                (S,cadena,numero_de_linea) = scanner.leer(errores)
+                proposicion(scanner,semantico,base,desplazamiento,errores)
+            else:
+                panico(scanner,errores)
+
             return
 
         return

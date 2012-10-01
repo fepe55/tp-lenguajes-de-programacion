@@ -27,14 +27,14 @@ class AnalizadorSemantico:
               tipo_erroneo += 1
             if tipo_erroneo == len(tipos_esperados):
              errores.error_semantico(errores.TIPO_INCORRECTO,nombre,numero_de_linea)
-             return
+             return (-1, self.tabla[i]["tipo"])
             else:
-             return self.tabla[i]["valor"] # Probablemente luego haga falta
+             return (0, self.tabla[i]["valor"]) # Probablemente luego haga falta
           i-=1
              
 
         errores.error_semantico(errores.NO_DECLARADO,nombre,numero_de_linea)
-        return
+        return (-2, nombre)
 
     def cargar (self,base,desplazamiento,nombre,tipo,valor,errores,numero_de_linea):
 

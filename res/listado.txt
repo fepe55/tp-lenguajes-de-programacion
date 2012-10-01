@@ -1,22 +1,24 @@
-1: VAR R, N;
-3: PROCEDURE INICIALIZAR;
-4: CONST UNO = ;
-5: R := -(-UNO);
-7: PROCEDURE RAIZ;
-8: BEGIN
-9:   CALL N;
-10:   WHILE R * R < N DO R := R + 1
-11: END;
-13: BEGIN
-14:   WRITE ('N: '); READLN (N);
-15:   WRITE ('RAIZ CUADRADA DE ', N, ': ');
-16:   IF N < 0 THEN WRITE ('ERROR');
-17:   IF N = 0 THEN WRITE (0);
-18:   IF N > 0 THEN
-19:     BEGIN
-20:       CALL RAIZ;
-21:       IF R* <>N THEN WRITE (R - 1, '..');
-22:       WRITE (R);
-23:     END;
-24:   WRITELN
-25: END.
+1: var X, Y, Z;
+3: procedure MULTIPLICAR;
+4: var A, B, A;
+5: begin
+6:      A := X;
+7:      B := Y;
+8:      Z := 0;
+9:      if X < 0 then A := -A;
+10:      if Y ( 0 then B := -B;
+11:      while B > 0 then
+12:          begin
+13:            if odd B then Z:= Z + A;
+14:            A := A * 2;
+15:            B := B / 2
+16:          end;
+17:      if X < 0 then Z:= -Z;
+18:      if Y < 0 then Z:= -Z
+19: end;
+21: Begin
+22:      write ('X: '); readLn X;
+23:      write ('Y: '); readLn (Y);
+24:      MULTIPLICAR;
+25:      writeLn ('X*Y=', Z);
+26: end.
