@@ -5,21 +5,22 @@ comienzo_de_proposicion = [
     '_write', '_readln',
 ]
 
+simbolos_de_sincronizacion = [
+    'puntoycoma','end','_call','_begin','_if',
+    '_while', '_writeln', '_write', '_readln',
+]
+
 # Precondición: Entro con una lectura hecha en el parser
 # Poscondición: Devuelvo una lectura más.
 def panico (scanner,errores):
-    simbolos_de_sincronizacion = [
-        'puntoycoma','end','_call','_begin','_if',
-        '_while', '_writeln', '_write', '_readln',
-    ]
-
     (S,cadena,numero_de_linea) = scanner.obtener_sin_leer()
     while S not in simbolos_de_sincronizacion:
         (S,cadena,numero_de_linea) = scanner.leer(errores)
 
-    (S,cadena,numero_de_linea) = scanner.leer(errores)
+    #(S,cadena,numero_de_linea) = scanner.leer(errores)
     print "Panic!\n" #debug
     return 
+
 
 # Precondición: Entro con una lectura hecha en el parser
 # Poscondición: Devuelvo una lectura más.
@@ -57,7 +58,6 @@ def constante (scanner,errores,semantico,base,desplazamiento):
             errores.error_sintactico(errores.SE_ESPERABA_COMA_PUNTOYCOMA,S,cadena,numero_de_linea)
             return desplazamiento
 
-
     (S,cadena,numero_de_linea) = scanner.leer(errores)
     return desplazamiento
 
@@ -82,12 +82,12 @@ def variable(scanner,errores,semantico,base,desplazamiento):
         else:
             errores.error_sintactico(errores.SE_ESPERABA_COMA_PUNTOYCOMA,S,cadena,numero_de_linea)
             #Manejo de errores. Si S es un identificador no declarado, inserción de coma
-            if S is "identificador" :
+            if S is "identificador":
                 (codigo,valor) = semantico.validar_sin_errores(base,desplazamiento,cadena,("_var",))
                 if codigo == -2 or codigo == -1:
                     desplazamiento = variable(scanner,errores,semantico,base,desplazamiento)
                     return desplazamiento
-            
+
             panico(scanner,errores) 
 
     (S,cadena,numero_de_linea) = scanner.leer(errores)
@@ -106,12 +106,13 @@ def procedimiento(scanner,errores,semantico,base,desplazamiento):
     (S,cadena,numero_de_linea) = scanner.leer(errores)
     if S is not "puntoycoma":
         errores.error_sintactico(errores.SE_ESPERABA_PUNTOYCOMA,S,cadena,numero_de_linea)
-        return desplazamiento
+    # Manejo de errores, si no es puntoycoma, inserción
+    else:
+        (S,cadena,numero_de_linea) = scanner.leer(errores)
 
     semantico.cargar (base,desplazamiento,nombre_procedimiento,"_procedure",0,errores,numero_de_linea)
     desplazamiento += 1
 
-    (S,cadena,numero_de_linea) = scanner.leer(errores)
     bloque(scanner,errores,semantico,base+desplazamiento) 
 
     (S,cadena,numero_de_linea) = scanner.obtener_sin_leer()
@@ -243,7 +244,7 @@ def readln(scanner,semantico,base,desplazamiento,errores):
         if S is not "identificador":
             errores.error_sintactico(errores.SE_ESPERABA_IDENTIFICADOR,S,cadena,numero_de_linea)
             return
-        semantico.validar(base,desplazamiento,cadena,("_var",),errores,numero_de_linea) 
+        semantico.validar(base,desplazamiento,cadena,("_var",),errores,numero_de_linea)
         (S,cadena,numero_de_linea) = scanner.leer(errores)
 
     if S is not "parentesiscierre":
@@ -266,7 +267,7 @@ def writeaux(scanner,semantico,base,desplazamiento,errores):
         #Como es literal, leo uno más, que no tuve que leer en el caso de expresión
         (S,cadena,numero_de_linea) = scanner.leer(errores)
 
-    while S is "coma" :
+    while S is "coma":
         (S,cadena,numero_de_linea) = scanner.leer(errores)
         if S is not "literal":
             expresion(scanner,semantico,base,desplazamiento,errores)
@@ -364,7 +365,13 @@ def proposicion(scanner,semantico,base,desplazamiento,errores):
             if S in comienzo_de_proposicion:
                 Saux = S
                 S = "puntoycoma"
+            else:
+                panico(scanner,errores)
+                (S,cadena,numero_de_linea) = scanner.obtener_sin_leer() #debug
+                print "Llamo a proposicion habiendo leido",S,cadena #debug
+                proposicion(scanner,semantico,base,desplazamiento,errores)
 
+        (S,cadena,numero_de_linea) = scanner.obtener_sin_leer()
         while S is "puntoycoma":
             if Saux:
                 S = Saux
