@@ -5,24 +5,6 @@ comienzo_de_proposicion = [
     '_write', '_readln', 
 ]
 
-simbolos_de_sincronizacion = [
-    'puntoycoma','end','_call','_begin','_if',
-    '_while', '_writeln', '_write', '_readln',
-]
-
-# Precondición: Entro con una lectura hecha en el parser
-# Poscondición: Devuelvo una lectura más.
-def panico (scanner,errores):
-    (S,cadena,numero_de_linea) = scanner.obtener_sin_leer()
-    print "Entré a pánico con ",S,cadena
-    while S not in simbolos_de_sincronizacion:
-        (S,cadena,numero_de_linea) = scanner.leer(errores)
-
-    print "Y salgo de pánico con ",S,cadena
-
-    return 
-
-
 # Precondición: Entro con una lectura hecha en el parser
 # Poscondición: Devuelvo una lectura más.
 def constante (scanner,errores,semantico,base,desplazamiento):
@@ -89,7 +71,7 @@ def variable(scanner,errores,semantico,base,desplazamiento):
                     desplazamiento = variable(scanner,errores,semantico,base,desplazamiento)
                     return desplazamiento
 
-            panico(scanner,errores) 
+            scanner.panico(errores) 
 
     (S,cadena,numero_de_linea) = scanner.leer(errores)
     return desplazamiento
@@ -236,7 +218,7 @@ def readln(scanner,semantico,base,desplazamiento,errores):
 
     if S is not "identificador":
        errores.error_sintactico(errores.SE_ESPERABA_IDENTIFICADOR,S,cadena,numero_de_linea) 
-       panico(scanner,errores)
+       scanner.panico(errores)
        return
 
     (S,cadena,numero_de_linea) = scanner.leer(errores)
@@ -337,7 +319,7 @@ def proposicion(scanner,semantico,base,desplazamiento,errores):
                 (S,cadena,numero_de_linea) = scanner.leer(errores)
                 expresion(scanner,semantico,base,desplazamiento,errores)
             else:
-                panico(scanner,errores)
+                scanner.panico(errores)
             return
 
         return
@@ -366,7 +348,7 @@ def proposicion(scanner,semantico,base,desplazamiento,errores):
                 Saux = S
                 S = "puntoycoma"
             else:
-                panico(scanner,errores)
+                scanner.panico(errores)
                 proposicion(scanner,semantico,base,desplazamiento,errores)
                 (S,cadena,numero_de_linea) = scanner.obtener_sin_leer()
 
@@ -387,6 +369,7 @@ def proposicion(scanner,semantico,base,desplazamiento,errores):
         # Salgo del ciclo de proposiciones, debe ser END
         if S is not "_end":
             errores.error_sintactico(errores.SE_ESPERABA_END_PUNTOYCOMA,S,cadena,numero_de_linea)
+            scanner.panico(errores) #mmm, acá ya salí, no me gusta, debería hacerlo antes
             return
         #Leo para cumplir la poscondición
         (S,cadena,numero_de_linea) = scanner.leer(errores)
@@ -419,7 +402,7 @@ def proposicion(scanner,semantico,base,desplazamiento,errores):
                 (S,cadena,numero_de_linea) = scanner.leer(errores)
                 proposicion(scanner,semantico,base,desplazamiento,errores)
             else:
-                panico(scanner,errores)
+                scanner.panico(errores)
 
             return
 

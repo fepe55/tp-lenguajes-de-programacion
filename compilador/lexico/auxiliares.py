@@ -125,12 +125,12 @@ def obtener_simbolo (linea,numero_de_linea,errores):
                 cad = linea[:2]
                 S = terminos[cad]
                 restante = linea[2:]
-            else :
+            else:
                 if c is '>':
                     cad = linea[:2]
                     S = terminos[cad]
                     restante = linea[2:]
-                else :
+                else:
                     cad = caracter
                     S = terminos[cad]
                     restante = linea[1:]
@@ -151,7 +151,9 @@ def obtener_simbolo (linea,numero_de_linea,errores):
                 restante = restante[1:]
             except IndexError:
                 errores.error_lexico(errores.FIN_INESPERADO_LITERAL,numero_de_linea)
-                break
+                S = '_nulo'
+                return (S,cad,restante)
+                #break
 
         cad = cad + "'"
         if longitud_correcta(cad):

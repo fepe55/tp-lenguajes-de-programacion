@@ -1,47 +1,166 @@
-1: var DO, X, Y, Q, R;
-3: procedure DIVIDIR;
-4: var V W;
-5: begin
-6:   Q := 0;
-7:   R := X; if R < 0 then R := -R;
-8:   W := Y; if W < 0 then W := -W;
-9:   V := Y; if V < 0 then V:= -V;
-10:   while W <= R do W := W * 2;
-11:   while W > V do
-12:     begin
-13:       Q := Q * 2; W := W / 2;
-14:       if W <= R then
-15:         begin
-16:           R := R - W; Q := Q + 1
-17:         end
-18:     end;
-19:   if X < 0 then R:= -R;
-20:   if X < 0 then Q:= -Q;
-21:   if Y < 0 then Q:= -Q;
-22: end;
-24: procedure OTRO;
-25:   procedure DIVIDIR;
-26:   begin
-27:     Q := X / Y; R := X - Y * Q
-28:   end;
-29: call DIVIDIR;
-31: procedure SALIDA;
-32: begin
-33:   write ('Cociente: ', Q); writeln;
-34:   write ('Resto: ', R); writeln;
-35: end;
-37: begin
-38:   write ('Dividendo: '); readln (X);
-39:   write ('Divisor: '); readln (Y);
-40:   writeln;
-41:   if Y <> 0 then
-42:     begin
-43:       write ('Metodo 1'); writeln;
-44:       call DIVIDIR;
-45:       call SALIDA; writeln;
-46:       write ('Metodo 2'); writeln;
-47:       call OTRO;
-48:       call SALIDA;
-49:     end
-50: end
-51: end
+1: CONST K1=1, K2=2, K3=3, K4=4, K5=5, K6=6, K7=7, K8=8, K9=9, K10=10,
+2: K11=11, K12=12, K13=13, K14=14, K15=15, K16=16, K17=17, K18=18, K19=19, K20=20,
+3: K21=21, K22=22, K23=23, K24=24, K25=25, K26=26, K27=27, K28=28, K29=29, K30=30,
+4: K31=31, K32=32, K33=33, K34=34, K35=35, K36=36, K37=37, K38=38, K39=39, K40=40,
+5: K41=41, K42=42, K43=43, K44=44, K45=45, K46=46, K47=47, K48=48, K49=49, K50=50,
+6: K51=51, K52=52, K53=53, K54=54, K55=55, K56=56, K57=57, K58=58, K59=59, K60=60,
+7: K61=61, K62=62, K63=63, K64=64, K65=65, K66=66, K67=67, K68=68, K69=69, K70=70,
+8: K71=71, K72=72, K73=73, K74=74, K75=75, K76=76, K77=77, K78=78, K79=79, K80=80,
+9: K81=81, K82=82, K83=83, K84=84, K85=85, K86=86, K87=87, K88=88, K89=89, K90=90,
+10: K91=91, K92=92, K93=93, K94=94, K95=95, K96=96, K97=97, K98=98, K99=99, K100=100,
+11: K101=101, K102=102, K103=103, K104=104, K105=105, K106=106, K107=107, K108=108, K109=109, K110=110,
+12: K111=111, K112=112, K113=113, K114=114, K115=115, K116=116, K117=117, K118=118, K119=119, K120=120,
+13: K121=121, K122=122, K123=123, K124=124, K125=125, K126=126, K127=127, K128=128, K129=129, K130=130,
+14: K131=131, K132=132, K133=133, K134=134, K135=135, K136=136, K137=137, K138=138, K139=139, K140=140,
+15: K141=141, K142=142, K143=143, K144=144, K145=145, K146=146, K147=147, K148=148, K149=149, K150=150,
+16: K151=151, K152=152, K153=153, K154=154, K155=155, K156=156, K157=157, K158=158, K159=159, K160=160,
+17: K161=161, K162=162, K163=163, K164=164, K165=165, K166=166, K167=167, K168=168, K169=169, K170=170,
+18: K171=171, K172=172, K173=173, K174=174, K175=175, K176=176, K177=177, K178=178, K179=179, K180=180,
+19: K181=181, K182=182, K183=183, K184=184, K185=185, K186=186, K187=187, K188=188, K189=189, K190=190,
+20: K191=191, K192=192, K193=193, K194=194, K195=195;
+22: var IMPORTE, BILLETE, VUELTO, PESOS, CENTAVOS, VUELTOPESOS, VUELTOCENTAVOS,
+23:     IMPORTEOK, CENTAVOSOK, PESOSOK, BILLETEOK, VUELTOOK,
+24: DEMASIADOLARGO1234567890123456789012345678901234567890123456789012345678901234567890,
+25: V1, V2, V3, V4, V5, V6, V7, V8, V9, V10,
+26: V11, V12, V13, V14, V15, V16, V17, V18, V19, V20,
+27: V21, V22, V23, V24, V25, V26, V27, V28, V29, V30,
+28: V31, V32, V33, V34, V35, V36, V37, V38, V39, V40,
+29: V41, V42, V43, V44, V45, V46, V47, V48, V49, V50,
+30: V51, V52, V53, V54, V55, V56, V57, V58, V59, V60,
+31: V61, V62, V63, V64, V65, V66, V67, V68, V69, V70,
+32: V71, V72, V73, V74, V75, V76, V77, V78, V79, V80,
+33: V81, V82, V83, V84, V85, V86, V87, V88, V89, V90,
+34: V91, V92, V93, V94, V95, V96, V97, V98, V99, V100,
+35: V101, V102, V103, V104, V105, V106, V107, V108, V109, V110,
+36: V111, V112, V113, V114, V115, V116, V117, V118, V119, V120,
+37: V121, V122, V123, V124, V125;
+39: procedure ERROR;
+40: begin
+41:   writeln ('VALOR FUERA DE RANGO!')
+42: end;
+44: begin
+45:   WRITELN ('*******************************************');
+46:   writeLn ('VUELTO PARA IMPORTES PAGADOS CON UN BILLETE');
+47:   WRITELN ('*******************************************');
+48:   writeln;
+49:   IMPORTEOK := -1;
+50:   while IMPORTEOK <> 0 do
+51:     begin
+52:       writeln ('IMPORTE (min $0.01 y max $100.00)');
+53:       CENTAVOSOK := -1;
+54:       while CENTAVOSOK <> 0 do
+55:         begin
+56:           write ('CENTAVOS: '); readLn (CENTAVOS);
+57:           CENTAVOSOK := 0;
+58:           if CENTAVOS < 0 then CENTAVOSOK := -1;
+59:           if CENTAVOS > 99 then CENTAVOSOK := -1;
+60:           if CENTAVOSOK <> 0 then call ERROR
+61:         end;
+62:       PESOSOK := -1;
+63:       while PESOSOK <> 0 do
+64:         begin
+65:           write ('PESOS: '); readLn (PESOS);
+66:           PESOSOK := 0;
+67:           if PESOS < 0 then PESOSOK := -1;
+68:           if PESOS > 100 then PESOSOK := -1;
+69:           if PESOSOK <> 0 then call ERROR
+70:        end;
+71:       write ('IMPORTE: $', PESOS, '.');
+72:       if CENTAVOS < 10 then write ('0');
+73:       writeLn (CENTAVOS);
+74:       IMPORTE := PESOS * 100 + CENTAVOS;
+75:       IMPORTEOK := 0;
+76:       if IMPORTE < 1 then IMPORTEOK := -1;
+77:       if IMPORTE > 10000 then IMPORTEOK := -1;
+78:       if IMPORTEOK <> 0 then call ERROR
+79:     end;
+81:   VUELTOOK := -1;
+82:   while VUELTOOK <> 0 do
+83:     begin
+84:       BILLETEOK := -1;
+85:       while BILLETEOK <> 0 do
+86:         begin
+87:           write ('BILLETE (min $2 y max $100): $'); readLn (BILLETE);
+88:           BILLETEOK := -1;
+89:           if BILLETE = 2 then BILLETEOK := 0;
+90:           if BILLETE = 5 then BILLETEOK := 0;
+91:           if BILLETE = 10 then BILLETEOK := 0;
+92:           if BILLETE = 20 then BILLETEOK := 0;
+93:           if BILLETE = 50 then BILLETEOK := 0;
+94:           if BILLETE = 100 then BILLETEOK := 0;
+95:           if BILLETEOK <> 0 then writeln ('BILLETE INEXISTENTE!')
+96:         end;
+97:       VUELTO := BILLETE * 100 - IMPORTE;
+98:       VUELTOOK := 0;
+99:       if VUELTO < 0 then
+100:         begin
+101:           VUELTOOK := -1;
+102:           writeLn ('BILLETE INSUFICIENTE PARA EL PAGO!')
+103:         end
+104:     end;
+106:   VUELTOPESOS := VUELTO / 100;
+107:   VUELTOCENTAVOS := VUELTO - VUELTOPESOS * 100;
+109:   write ('Su vuelto: $', VUELTOPESOS, '.');
+110:   if VUELTOCENTAVOS < 10 then write ('0');
+111:   writeLn (VUELTOCENTAVOS);
+113:   writeLn;
+115:   if VUELTO >= 5000 then
+116:     begin
+117:       writeLn ('1 billete de $50');
+118:       VUELTO := VUELTO - 5000
+119:     end;
+121:   if VUELTO >= 2000 then
+122:     begin
+123:       if VUELTO / 2000 = 1 then writeLn ('1 billete de $20');
+124:       if VUELTO / 2000 <> 1 then writeLn ('2 billetes de $20');
+125:       VUELTO := VUELTO - VUELTO / 2000 * 2000
+126:     end;
+128:   if VUELTO >= 1000 then
+129:     begin
+130:       writeLn ('1 billete de $10');
+131:       VUELTO := VUELTO - 1000
+132:     end;
+134:   if VUELTO >= 500 then
+135:     begin
+136:       writeLn ('1 billete de $5');
+137:       VUELTO := VUELTO - 500
+138:     end;
+140:   if VUELTO >= 200 then
+141:     begin
+142:       if VUELTO / 200 = 1 then writeLn ('1 billete de $2');
+143:       if VUELTO / 200 <> 1 then writeLn ('2 billetes de $2');
+144:       VUELTO := VUELTO - VUELTO / 200 * 200
+145:     end;
+147:   if VUELTO >= 100 then
+148:     begin
+149:       writeLn ('1 moneda de $1');
+150:       VUELTO := VUELTO - 100
+151:     end;
+153:   if VUELTO >= 50 then
+154:     begin
+155:       writeLn ('1 moneda de 50 centavos');
+156:       VUELTO := VUELTO - 50
+157:     end;
+159:   if VUELTO >= 25 then
+160:     begin
+161:       writeLn ('1 moneda de 25 centavos');
+162:       VUELTO := VUELTO - 25
+163:     end;
+165:   if VUELTO >= 10 then
+166:     begin
+167:       if VUELTO / 10 = 1 then writeLn ('1 moneda de 10 centavos');
+168:       if VUELTO / 10 <> 1 then writeLn ('2 monedas de 10 centavos');
+169:       VUELTO := VUELTO - VUELTO / 10 * 10
+170:     end;
+172:   if VUELTO >= 5 then
+173:     begin
+174:       writeLn ('1 moneda de 5 centavos');
+175:       VUELTO := VUELTO - 5
+176:     end;
+178:   if VUELTO > 1 then writeLn (VUELTO, ' monedas de 1 centavo');
+179:   if VUELTO = 1 then writeLn ('1 moneda de 1 centavo');
+181:   WRITELN ('***************************************************************
+182: ***************************************************************************
+183: ***************************************************************************
+184: *************************************************************************');
+186:   WRITELN ('************************************************************************************************************************************************************************************************************************************************************');

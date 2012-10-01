@@ -26,7 +26,7 @@ class Scanner:
             return (self.S, self.cad, self.numero_de_linea)
         else:
             if not self.restante:
-                while not self.restante :
+                while not self.restante:
                     self.numero_de_linea+=1
                     #self.listado.escribir("\n")
                     self.restante = self.fuente.leer_linea_sin_nl()
@@ -49,4 +49,20 @@ class Scanner:
         print "cad:",self.cad
         print "S:",self.S
         print
+
+    # Precondición: Entro con una lectura hecha en el parser
+    # Poscondición: Devuelvo una lectura más.
+    def panico (self,errores):
+        simbolos_de_sincronizacion = [
+            'puntoycoma','end','_call','_begin','_if',
+            '_while', '_writeln', '_write', '_readln',
+        ]
+        (S,cadena,numero_de_linea) = self.obtener_sin_leer()
+        print "Entré a pánico con ",S,cadena
+        while S not in simbolos_de_sincronizacion:
+            (S,cadena,numero_de_linea) = self.leer(errores)
+
+        print "Y salgo de pánico con ",S,cadena
+
+        return 
 
