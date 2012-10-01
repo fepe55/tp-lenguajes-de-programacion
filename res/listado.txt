@@ -1,24 +1,47 @@
-1: var X, Y, Z;
-3: procedure MULTIPLICAR;
-4: var A, B, A;
+1: var DO, X, Y, Q, R;
+3: procedure DIVIDIR;
+4: var V W;
 5: begin
-6:      A := X;
-7:      B := Y;
-8:      Z := 0;
-9:      if X < 0 then A := -A;
-10:      if Y ( 0 then B := -B;
-11:      while B > 0 then
-12:          begin
-13:            if odd B then Z:= Z + A;
-14:            A := A * 2;
-15:            B := B / 2
-16:          end;
-17:      if X < 0 then Z:= -Z;
-18:      if Y < 0 then Z:= -Z
-19: end;
-21: Begin
-22:      write ('X: '); readLn X;
-23:      write ('Y: '); readLn (Y);
-24:      MULTIPLICAR;
-25:      writeLn ('X*Y=', Z);
-26: end.
+6:   Q := 0;
+7:   R := X; if R < 0 then R := -R;
+8:   W := Y; if W < 0 then W := -W;
+9:   V := Y; if V < 0 then V:= -V;
+10:   while W <= R do W := W * 2;
+11:   while W > V do
+12:     begin
+13:       Q := Q * 2; W := W / 2;
+14:       if W <= R then
+15:         begin
+16:           R := R - W; Q := Q + 1
+17:         end
+18:     end;
+19:   if X < 0 then R:= -R;
+20:   if X < 0 then Q:= -Q;
+21:   if Y < 0 then Q:= -Q;
+22: end;
+24: procedure OTRO;
+25:   procedure DIVIDIR;
+26:   begin
+27:     Q := X / Y; R := X - Y * Q
+28:   end;
+29: call DIVIDIR;
+31: procedure SALIDA;
+32: begin
+33:   write ('Cociente: ', Q); writeln;
+34:   write ('Resto: ', R); writeln;
+35: end;
+37: begin
+38:   write ('Dividendo: '); readln (X);
+39:   write ('Divisor: '); readln (Y);
+40:   writeln;
+41:   if Y <> 0 then
+42:     begin
+43:       write ('Metodo 1'); writeln;
+44:       call DIVIDIR;
+45:       call SALIDA; writeln;
+46:       write ('Metodo 2'); writeln;
+47:       call OTRO;
+48:       call SALIDA;
+49:     end
+50: end
+51: end

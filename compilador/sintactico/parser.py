@@ -37,6 +37,6 @@ def parser (fuente,listado):
     if S is not "punto":
         errores.error_sintactico(errores.SE_ESPERABA_PUNTO,S,cadena,numero_de_linea)
 
-    #semantico.debug_imprimir_tabla()
+    semantico.debug_imprimir_tabla()
 
     return errores.resumen()

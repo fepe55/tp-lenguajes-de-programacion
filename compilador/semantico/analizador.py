@@ -9,6 +9,23 @@ class AnalizadorSemantico:
         self.tabla = [None]*(CANT_MAX_IDENT-1)
         self.cant_variables = 0
 
+    def validar_sin_errores (self,base,desplazamiento,nombre,tipos_esperados):
+        i = base+desplazamiento-1
+        if i<CANT_MAX_IDENT:
+         while i>=0 :
+          if self.tabla[i]:
+           if self.tabla[i]["nombre"] == nombre:
+            tipo_erroneo = 0
+            for tipo in tipos_esperados:
+             if self.tabla[i]["tipo"] != tipo:
+              tipo_erroneo += 1
+            if tipo_erroneo == len(tipos_esperados):
+             return (-1, self.tabla[i]["tipo"])
+            else:
+             return (0, self.tabla[i]["valor"]) # Probablemente luego haga falta
+          i-=1
+        return (-2, nombre)
+ 
     def validar (self,base,desplazamiento,nombre,tipos_esperados,errores,numero_de_linea):
         # Para el análisis semántico, los identificadores se buscarán en toda
         # la tabla, comenzando en la posición BASE+DESPLAZAMIENTO-1 y
@@ -32,7 +49,6 @@ class AnalizadorSemantico:
              return (0, self.tabla[i]["valor"]) # Probablemente luego haga falta
           i-=1
              
-
         errores.error_semantico(errores.NO_DECLARADO,nombre,numero_de_linea)
         return (-2, nombre)
 
