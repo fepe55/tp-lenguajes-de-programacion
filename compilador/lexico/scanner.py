@@ -10,8 +10,8 @@ class Scanner:
         self.S = ''
         self.cad = ''
         self.numero_de_linea = 1
-        self.restante = fuente.leer_linea_sin_nl() 
-        self.listado.escribir(str(self.numero_de_linea)+': '+self.restante) 
+        self.restante = fuente.leer_linea_sin_nl()
+        self.listado.escribir(str(self.numero_de_linea)+': '+self.restante)
 
 
     def obtener_sin_leer(self):
@@ -22,7 +22,8 @@ class Scanner:
         if self.restante is "EOF":
             self.S = "_FIN"
             self.cad = ""
-            errores.error_lexico(errores.FIN_INESPERADO_PROGRAMA,self.numero_de_linea)
+            if errores:
+                errores.error_lexico(errores.FIN_INESPERADO_PROGRAMA,self.numero_de_linea)
             return (self.S, self.cad, self.numero_de_linea)
         else:
             if not self.restante:
@@ -44,25 +45,26 @@ class Scanner:
             return (self.S, self.cad, self.numero_de_linea)
 
 
+    # Precondición: Entro con una lectura hecha en el parser
+    # Poscondición: Devuelvo una lectura más.
+    def panico (self,errores):
+        simbolos_de_sincronizacion = [
+            'puntoycoma','_end','_call','_begin','_if',
+            '_while', '_writeln', '_write', '_readln', '_FIN',
+        ]
+        (S,cadena,numero_de_linea) = self.obtener_sin_leer()
+        print "Entré a pánico con ",S,cadena,"en",numero_de_linea
+        while S not in simbolos_de_sincronizacion:
+            (S,cadena,numero_de_linea) = self.leer(None)
+            print "S es",S,cadena,"en",numero_de_linea
+
+        print "Y salgo de pánico con ",S,cadena,"en",numero_de_linea
+
+        return
+
+
     def debug_imprimir(self):
         print self.numero_de_linea
         print "cad:",self.cad
         print "S:",self.S
         print
-
-    # Precondición: Entro con una lectura hecha en el parser
-    # Poscondición: Devuelvo una lectura más.
-    def panico (self,errores):
-        simbolos_de_sincronizacion = [
-            'puntoycoma','end','_call','_begin','_if',
-            '_while', '_writeln', '_write', '_readln',
-        ]
-        (S,cadena,numero_de_linea) = self.obtener_sin_leer()
-        print "Entré a pánico con ",S,cadena
-        while S not in simbolos_de_sincronizacion:
-            (S,cadena,numero_de_linea) = self.leer(errores)
-
-        print "Y salgo de pánico con ",S,cadena
-
-        return 
-

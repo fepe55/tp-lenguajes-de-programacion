@@ -46,11 +46,11 @@ def numero_longitud_correcta(numero):
     return longitud_correcta(str(numero))
 
 def palabra_reservada(palabra):
-    palabras_reservadas = ['begin', 'end', 'call', 'const', 'var', 
+    palabras_reservadas = ['begin', 'end', 'call', 'const', 'var',
         'while', 'do', 'if', 'then', 'procedure', 'odd', 'eof',
         'write', 'writeln', 'readln',
     ]
- 
+
     if palabra.lower() in palabras_reservadas:
         return terminos[palabra.lower()]
     else :
@@ -60,13 +60,13 @@ def obtener_simbolo (linea,numero_de_linea,errores):
 
     simbolos_de_un_caracter_unicos = ['=',',','.',';','(',')','+','-','*','/']
 
-    caracter = linea[0] 
+    caracter = linea[0]
     cad = ""
 
     while caracter is ' ':
         linea = linea[1:]
         caracter = linea[0]
-        
+
     if caracter in simbolos_de_un_caracter_unicos:
         cad = caracter
         S = terminos[caracter]
@@ -80,17 +80,19 @@ def obtener_simbolo (linea,numero_de_linea,errores):
             cad = caracter
             S = '_nulo'
             restante = linea[1:]
-            errores.error_lexico(errores.SE_ESPERABA_IGUAL,numero_de_linea)
+            if errores:
+                errores.error_lexico(errores.SE_ESPERABA_IGUAL,numero_de_linea)
         else:
             if c == '=':
                 cad = linea[:2]
                 S = terminos[cad]
                 restante = linea[2:]
             else:
-                cad = caracter 
+                cad = caracter
                 S = '_nulo'
                 restante = linea[1:]
-                errores.error_lexico(errores.SE_ESPERABA_IGUAL,numero_de_linea)
+                if errores:
+                    errores.error_lexico(errores.SE_ESPERABA_IGUAL,numero_de_linea)
 
         return (S,cad,restante)
 
@@ -139,7 +141,8 @@ def obtener_simbolo (linea,numero_de_linea,errores):
     #Literal
     if caracter == "'" or caracter == "\"":
         if caracter ==  "\"":
-            errores.error_lexico(errores.COMILLAS_EN_LUGAR_DE_APOSTROFO,numero_de_linea)
+            if errores:
+                errores.error_lexico(errores.COMILLAS_EN_LUGAR_DE_APOSTROFO,numero_de_linea)
         cad = "'"
         caracter = linea[1]
         restante = linea[2:]
@@ -150,8 +153,10 @@ def obtener_simbolo (linea,numero_de_linea,errores):
                 caracter = restante[0]
                 restante = restante[1:]
             except IndexError:
-                errores.error_lexico(errores.FIN_INESPERADO_LITERAL,numero_de_linea)
+                if errores:
+                    errores.error_lexico(errores.FIN_INESPERADO_LITERAL,numero_de_linea)
                 S = '_nulo'
+                cad = '_panico'
                 return (S,cad,restante)
                 #break
 
@@ -159,8 +164,10 @@ def obtener_simbolo (linea,numero_de_linea,errores):
         if longitud_correcta(cad):
             S = 'literal'
         else:
-            errores.error_lexico(errores.LITERAL_DEMASIADO_LARGO,numero_de_linea)
+            if errores:
+                errores.error_lexico(errores.LITERAL_DEMASIADO_LARGO,numero_de_linea)
             S = '_nulo'
+            cad = '_panico'
         return (S,cad,restante)
 
     #Número
@@ -179,7 +186,8 @@ def obtener_simbolo (linea,numero_de_linea,errores):
         if numero_longitud_correcta(cad):
             S = 'numero'
         else:
-            errores.error_lexico(errores.ENTERO_DEMASIADO_LARGO,numero_de_linea)
+            if errores:
+                errores.error_lexico(errores.ENTERO_DEMASIADO_LARGO,numero_de_linea)
             S = '_nulo'
         return (S,cad,restante)
 
@@ -196,7 +204,8 @@ def obtener_simbolo (linea,numero_de_linea,errores):
         if longitud_correcta(cad):
             S = palabra_reservada(cad)
         else:
-            errores.error_lexico(errores.IDENTIFICADOR_DEMASIADO_LARGO,numero_de_linea)
+            if errores:
+                errores.error_lexico(errores.IDENTIFICADOR_DEMASIADO_LARGO,numero_de_linea)
             S = '_nulo'
         return (S,cad,restante)
 

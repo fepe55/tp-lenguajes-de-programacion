@@ -244,8 +244,13 @@ def readln(scanner,semantico,base,desplazamiento,errores):
 def writeaux(scanner,semantico,base,desplazamiento,errores):
     (S,cadena,numero_de_linea) = scanner.obtener_sin_leer()
     if S is not "literal":
-        expresion(scanner,semantico,base,desplazamiento,errores)
-        (S,cadena,numero_de_linea) = scanner.obtener_sin_leer()
+        #Manejo de errores
+        if S is '_nulo' and cadena is '_panico':
+            scanner.panico(errores)
+            return
+        else:
+            expresion(scanner,semantico,base,desplazamiento,errores)
+            (S,cadena,numero_de_linea) = scanner.obtener_sin_leer()
     else:
         #Como es literal, leo uno más, que no tuve que leer en el caso de expresión
         (S,cadena,numero_de_linea) = scanner.leer(errores)
@@ -253,8 +258,13 @@ def writeaux(scanner,semantico,base,desplazamiento,errores):
     while S is "coma":
         (S,cadena,numero_de_linea) = scanner.leer(errores)
         if S is not "literal":
-            expresion(scanner,semantico,base,desplazamiento,errores)
-            (S,cadena,numero_de_linea) = scanner.obtener_sin_leer()
+            #Manejo de errores
+            if S is '_nulo' and cadena is '_panico':
+                scanner.panico(errores)
+                return
+            else:
+                expresion(scanner,semantico,base,desplazamiento,errores)
+                (S,cadena,numero_de_linea) = scanner.obtener_sin_leer()
         else:
             #Como es literal, leo uno más, que no tuve que leer en el caso de expresión
             (S,cadena,numero_de_linea) = scanner.leer(errores)
