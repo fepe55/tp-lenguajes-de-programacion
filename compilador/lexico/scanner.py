@@ -53,12 +53,8 @@ class Scanner:
             '_while', '_writeln', '_write', '_readln', '_FIN',
         ]
         (S,cadena,numero_de_linea) = self.obtener_sin_leer()
-        print "Entré a pánico con ",S,cadena,"en",numero_de_linea
         while S not in simbolos_de_sincronizacion:
             (S,cadena,numero_de_linea) = self.leer(None)
-            print "S es",S,cadena,"en",numero_de_linea
-
-        print "Y salgo de pánico con ",S,cadena,"en",numero_de_linea
 
         return
 
